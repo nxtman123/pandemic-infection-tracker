@@ -55,7 +55,7 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'App',
   data: () => ({
-    drawer: false,
+    drawer: null,
   }),
 });
 </script>
