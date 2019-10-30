@@ -1,5 +1,9 @@
 # pandemic-infection-tracker
 
+An app for keeping track of infection cards in the board game "Pandemic".
+
+I'm building this while playing Pandemic Legacy Season 2.
+
 ## Project setup
 ```
 yarn install
