@@ -1,22 +1,36 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '@/views/Home.vue';
+import InfectionDeck from '@/views/InfectionDeck.vue';
+import Forecast from '@/views/Forecast.vue';
+import Gameplay from '@/views/Gameplay.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home,
+    path: '/deck',
+    alias: '/',
+    name: 'deck',
+    component: InfectionDeck,
+    meta: {
+      title: 'Infection Deck',
+    },
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/gameplay',
+    name: 'gameplay',
+    component: Gameplay,
+    meta: {
+      title: 'Gameplay',
+    },
+  },
+  {
+    path: '/forecast',
+    name: 'forecast',
+    component: Forecast,
+    meta: {
+      title: 'Forecast',
+    },
   },
 ];
 

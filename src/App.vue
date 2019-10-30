@@ -7,7 +7,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title class="headline">
-        <span class="font-weight-black">PANDEMIC</span> Infection and Epidemic Tracker
+        <span class="font-weight-bold">{{ title }}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -17,23 +17,23 @@
       clipped
     >
       <v-list>
-        <v-list-item>
+        <v-list-item link to="deck">
           <v-list-item-action>
             <v-icon>mdi-cards</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            Starting card counts
+            Infection Deck
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
+        <v-list-item link to="gameplay">
           <v-list-item-action>
             <v-icon>mdi-playlist-edit</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            Record cards
+            Gameplay
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
+        <v-list-item link to="forecast">
           <v-list-item-action>
             <v-icon>mdi-binoculars</v-icon>
           </v-list-item-action>
@@ -57,5 +57,10 @@ export default Vue.extend({
   data: () => ({
     drawer: null,
   }),
+  computed: {
+    title() {
+      return this.$route.meta.title;
+    },
+  },
 });
 </script>
