@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <v-container>
     <h1>Gameplay page</h1>
-  </div>
+  </v-container>
 </template>

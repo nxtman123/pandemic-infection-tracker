@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <v-container>
     <h1>Forecast page</h1>
-  </div>
+  </v-container>
 </template>

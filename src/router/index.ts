@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import InfectionDeck from '@/views/InfectionDeck.vue';
-import Forecast from '@/views/Forecast.vue';
 import Gameplay from '@/views/Gameplay.vue';
+import Forecast from '@/views/Forecast.vue';
 
 Vue.use(VueRouter);
 
