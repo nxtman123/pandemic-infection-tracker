@@ -3,7 +3,6 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import InfectionDeck from '@/pages/InfectionDeck.vue';
 import Gameplay from '@/pages/Gameplay.vue';
 import Forecast from '@/pages/Forecast.vue';
-import ToolbarTitle from '@/components/ToolbarTitle.vue';
 
 Vue.use(VueRouter);
 
@@ -14,27 +13,24 @@ const routes: RouteConfig[] = [
     name: 'deck',
     components: {
       default: InfectionDeck,
-      title: ToolbarTitle,
     },
-    props: { title: { value: 'Infection Deck' } },
+    meta: { title: 'Infection Deck' },
   },
   {
     path: '/gameplay',
     name: 'gameplay',
     components: {
       default: Gameplay,
-      title: ToolbarTitle,
     },
-    props: { title: { value: 'Gameplay' } },
+    meta: { title: 'Gameplay' },
   },
   {
     path: '/forecast',
     name: 'forecast',
     components: {
       default: Forecast,
-      title: ToolbarTitle,
     },
-    props: { title: { value: 'Forecast' } },
+    meta: { title: 'Forecast' },
   },
 ];
 
@@ -42,6 +38,11 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeResolve((to, from, next) => {
+  if (to.meta && to.meta.title) document.title = `${to.meta.title} - Pandemic Infection Tracker`;
+  next();
 });
 
 export default router;

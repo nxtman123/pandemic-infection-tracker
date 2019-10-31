@@ -1,0 +1,46 @@
+<template>
+  <v-app>
+    <v-app-bar
+      app
+      clipped-left
+      color="primary"
+      elevation="0"
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+      <v-toolbar-title>
+        <span class="headline font-weight-bold">
+          <slot name="title">
+            Pandemic Infection Tracker
+          </slot>
+        </span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      clipped
+    >
+      <drawer-navigation/>
+    </v-navigation-drawer>
+    <v-content>
+      <v-container>
+        <slot></slot>
+      </v-container>
+    </v-content>
+  </v-app>
+</template>
+
+<script>
+import Vue from 'vue';
+import DrawerNavigation from '@/components/DrawerNavigation.vue';
+
+export default Vue.extend({
+  components: { DrawerNavigation },
+  data() {
+    return {
+      drawer: null,
+    };
+  },
+});
+</script>

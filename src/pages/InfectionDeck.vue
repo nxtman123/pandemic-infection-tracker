@@ -1,5 +1,3 @@
 <template>
-  <v-container>
-    <h1>Infection Deck</h1>
-  </v-container>
+  <h1>Infection Deck page</h1>
 </template>
