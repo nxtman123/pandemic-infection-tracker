@@ -7,10 +7,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import Vue from 'vue';
 
-@Component
-export default class ToolbarTitle extends Vue {
-  @Prop({ required: true }) readonly value!: string;
-}
+export default Vue.extend({
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+  },
+});
 </script>

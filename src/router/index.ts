@@ -9,14 +9,14 @@ Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
   {
-    path: '/deck',
     alias: '/',
+    path: '/deck',
     name: 'deck',
     components: {
       default: InfectionDeck,
       title: ToolbarTitle,
     },
-    props: { title: { value: 'Deck' } },
+    props: { title: { value: 'Infection Deck' } },
   },
   {
     path: '/gameplay',

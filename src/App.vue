@@ -5,8 +5,8 @@
       clipped-left
       color="primary"
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <router-view name="title"></router-view>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+      <router-view name="title"></router-view>
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-navigation-drawer
@@ -49,14 +49,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Component from 'vue-class-component';
 
-@Component
-export default class App extends Vue {
-  drawer = null;
-
-  get title() {
-    return this.$route.name;
-  }
-}
+export default Vue.extend({
+  data() {
+    return {
+      drawer: null,
+    };
+  },
+});
 </script>
