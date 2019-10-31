@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import InfectionDeck from '@/views/InfectionDeck.vue';
-import Gameplay from '@/views/Gameplay.vue';
-import Forecast from '@/views/Forecast.vue';
+import InfectionDeck from '@/pages/InfectionDeck.vue';
+import Gameplay from '@/pages/Gameplay.vue';
+import Forecast from '@/pages/Forecast.vue';
+import ToolbarTitle from '@/components/ToolbarTitle.vue';
 
 Vue.use(VueRouter);
 
@@ -11,17 +12,29 @@ const routes: RouteConfig[] = [
     path: '/deck',
     alias: '/',
     name: 'deck',
-    component: InfectionDeck,
+    components: {
+      default: InfectionDeck,
+      title: ToolbarTitle,
+    },
+    props: { title: { value: 'Deck' } },
   },
   {
     path: '/gameplay',
     name: 'gameplay',
-    component: Gameplay,
+    components: {
+      default: Gameplay,
+      title: ToolbarTitle,
+    },
+    props: { title: { value: 'Gameplay' } },
   },
   {
     path: '/forecast',
     name: 'forecast',
-    component: Forecast,
+    components: {
+      default: Forecast,
+      title: ToolbarTitle,
+    },
+    props: { title: { value: 'Forecast' } },
   },
 ];
 

@@ -6,9 +6,7 @@
       color="primary"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title class="headline">
-        <span class="font-weight-bold">{{ title }}</span>
-      </v-toolbar-title>
+        <router-view name="title"></router-view>
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-navigation-drawer
