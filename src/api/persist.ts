@@ -4,17 +4,17 @@ import { RootState } from '@/store/types';
 const GAME_STATE = 'GAME_STATE';
 
 export interface PersistAPI {
-  load: () => RootState | null;
-  persist: (s: RootState) => void;
+  load: () => Promise<RootState | null>;
+  persist: (s: RootState) => Promise<void>;
 }
 
 const persistApi: PersistAPI = {
 
-  load(): RootState | null {
+  async load(): Promise<RootState | null> {
     return local.get(GAME_STATE, null);
   },
 
-  persist(state: RootState) {
+  async persist(state: RootState) {
     local.add(GAME_STATE, state);
   },
 

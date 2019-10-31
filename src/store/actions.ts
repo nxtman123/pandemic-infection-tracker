@@ -25,13 +25,13 @@ const actions: ActionTree<RootState, RootState> = {
     cityNames.forEach(name => commit('newCity', name));
   },
 
-  loadState({ commit }) {
-    const state = persistApi.load();
+  async loadState({ commit }) {
+    const state = await persistApi.load();
     commit('setState', state);
   },
 
-  persistState({ state }) {
-    persistApi.persist(state);
+  async persistState({ state }) {
+    await persistApi.persist(state);
   },
 
 };
