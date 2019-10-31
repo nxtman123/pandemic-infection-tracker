@@ -1,36 +1,27 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import InfectionDeck from '@/views/InfectionDeck.vue';
 import Gameplay from '@/views/Gameplay.vue';
 import Forecast from '@/views/Forecast.vue';
 
 Vue.use(VueRouter);
 
-const routes = [
+const routes: RouteConfig[] = [
   {
     path: '/deck',
     alias: '/',
     name: 'deck',
     component: InfectionDeck,
-    meta: {
-      title: 'Infection Deck',
-    },
   },
   {
     path: '/gameplay',
     name: 'gameplay',
     component: Gameplay,
-    meta: {
-      title: 'Gameplay',
-    },
   },
   {
     path: '/forecast',
     name: 'forecast',
     component: Forecast,
-    meta: {
-      title: 'Forecast',
-    },
   },
 ];
 
