@@ -51,16 +51,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Component from 'vue-class-component';
 
-export default Vue.extend({
-  name: 'App',
-  data: () => ({
-    drawer: null,
-  }),
-  computed: {
-    title() {
-      return this.$route.meta.title;
-    },
-  },
-});
+@Component
+export default class App extends Vue {
+  drawer = null;
+
+  get title() {
+    return this.$route.name;
+  }
+}
 </script>
