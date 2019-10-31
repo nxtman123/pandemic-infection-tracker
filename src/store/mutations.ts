@@ -18,10 +18,11 @@ const mutations: MutationTree<RootState> = {
 
   decrementCityCount(state: RootState, id: number) {
     if (state.deck.length >= id) throw new Error('Invalid City ID');
+    if (state.deck[id].count <= 0) throw new RangeError("A city can't have fewer than zero cards");
     state.deck[id].count -= 1;
   },
 
-  saveDeck(state: RootState, deck: City[]) {
+  setDeck(state: RootState, deck: City[]) {
     state.deck = deck;
   },
 
