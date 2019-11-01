@@ -6,6 +6,12 @@
       :key="index"
       :cityId="cityId"
     ></city-card>
+    <v-btn
+      depressed
+      color="secondary"
+      width="100%"
+      class="d-block"
+    ><v-icon>mdi-plus</v-icon></v-btn>
   </v-sheet>
 </template>
 
@@ -28,8 +34,7 @@ export default Vue.extend({
       return `Period ${this.period.id + 1}`;
     },
     cards() {
-      const a = this.period.cards.map((cityId, index) => ({ cityId, index }));
-      return a;
+      return this.period.cards.map((cityId, index) => ({ cityId, index }));
     },
   },
 });
