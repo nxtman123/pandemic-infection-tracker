@@ -4,7 +4,7 @@
     class="my-1 pa-2 d-flex justify-space-between align-baseline"
     color="primary"
   >
-    <span class="body-1 period-title">{{ city.name }}</span>
+    <span class="body-1 period-title">{{ card.name }}</span>
     <div>
       <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
     </div>
@@ -16,21 +16,9 @@ import Vue from 'vue';
 
 export default Vue.extend({
   props: {
-    index: {
+    card: {
       required: true,
-      type: Number,
-    },
-    cityId: {
-      required: true,
-      type: Number,
-    },
-  },
-  computed: {
-    city() {
-      return this.$store.state.deck[this.cityId] || {
-        id: -1,
-        name: 'Unknown City',
-      };
+      type: Object,
     },
   },
 });
@@ -38,6 +26,6 @@ export default Vue.extend({
 
 <style scoped>
 span.period-title {
-  min-width: 9em;
+  min-width: 8em;
 }
 </style>

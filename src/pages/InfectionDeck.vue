@@ -9,6 +9,7 @@
 
 <script>
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 import PeriodList from '@/components/PeriodList.vue';
 
 export default Vue.extend({
@@ -16,9 +17,9 @@ export default Vue.extend({
     PeriodList,
   },
   computed: {
-    periods() {
-      return this.$store.state.periods.map((cards, periodId) => ({ periodId, cards }));
-    },
+    ...mapGetters([
+      'periods',
+    ]),
   },
 });
 </script>

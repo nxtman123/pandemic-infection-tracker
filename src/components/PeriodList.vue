@@ -2,10 +2,9 @@
   <v-sheet class="my-1 pa-4">
     <span class="headline period-title">{{ title }}</span>
     <city-card
-      v-for="{ cityId, index } in cards"
-      :key="index"
-      :index="index"
-      :cityId="cityId"
+      v-for="card in period.cards"
+      :key="card.position"
+      :card="card"
     ></city-card>
     <v-btn
       depressed
@@ -33,9 +32,6 @@ export default Vue.extend({
   computed: {
     title() {
       return `Period ${this.period.id + 1}`;
-    },
-    cards() {
-      return this.period.cards.map((cityId, index) => ({ cityId, index }));
     },
   },
 });

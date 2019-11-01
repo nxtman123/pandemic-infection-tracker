@@ -1,14 +1,26 @@
 
 export interface RootState {
   deck: City[];
-  periods: Period[];
+  periods: PeriodState[];
 }
 
-export interface City {
+export interface CityCard {
   id: number;
   name: string;
   // color: string;
+}
+
+export interface City extends CityCard {
   count: number;
 }
 
-export type Period = number[];
+export interface CityCardInStack extends CityCard{
+  position: number;
+}
+
+export type PeriodState = number[];
+
+export interface Period {
+  id: number,
+  cards: CityCardInStack[],
+}
