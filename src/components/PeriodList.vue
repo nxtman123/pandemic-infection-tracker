@@ -29,7 +29,6 @@ export default Vue.extend({
     },
     cards() {
       const a = this.period.cards.map((cityId, index) => ({ cityId, index }));
-      console.log(a);
       return a;
     },
   },
