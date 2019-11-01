@@ -1,22 +1,19 @@
 <template>
   <v-container>
     <h2 class="title">Cities</h2>
-    <v-sheet
-      elevation="1"
-      class="my-1 pa-2"
-      v-for="city in cities"
-      :key="city"
-    >
-      {{ city.name }}
-    </v-sheet>
+    <city-card v-for="city in cities" :key="city.id" :city="city" ></city-card>
   </v-container>
 </template>
 
 <script>
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
+import CityCard from '@/components/CityCard.vue';
 
 export default Vue.extend({
+  components: {
+    CityCard,
+  },
   computed: {
     ...mapGetters({
       cities: 'citiesAlphabetically',
