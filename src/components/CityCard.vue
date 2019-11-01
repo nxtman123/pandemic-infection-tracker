@@ -1,6 +1,13 @@
 <template>
-  <v-sheet elevation="1" class="my-1 pa-4">
+  <v-sheet
+    elevation="1"
+    class="my-1 pa-2 d-flex justify-space-between align-baseline"
+    color="primary"
+  >
     <span class="body-1 period-title">{{ city.name }}</span>
+    <div>
+      <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
+    </div>
   </v-sheet>
 </template>
 
@@ -9,6 +16,10 @@ import Vue from 'vue';
 
 export default Vue.extend({
   props: {
+    index: {
+      required: true,
+      type: Number,
+    },
     cityId: {
       required: true,
       type: Number,
