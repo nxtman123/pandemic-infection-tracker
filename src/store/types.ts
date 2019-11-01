@@ -11,7 +11,4 @@ export interface City {
   count: number;
 }
 
-export interface Period {
-  id: number;
-  cards: number[];
-}
+export type Period = number[];

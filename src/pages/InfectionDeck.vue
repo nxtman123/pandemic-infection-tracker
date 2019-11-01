@@ -14,7 +14,7 @@ export default Vue.extend({
   },
   computed: {
     periods() {
-      return this.$store.state.periods;
+      return this.$store.state.periods.map((cards, periodId) => ({ periodId, cards }));
     },
   },
 });

@@ -4,6 +4,7 @@
     <city-card
       v-for="{ cityId, index } in cards"
       :key="index"
+      :index="index"
       :cityId="cityId"
     ></city-card>
     <v-btn
