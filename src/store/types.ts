@@ -4,10 +4,13 @@ export interface RootState {
   periods: Period[];
 }
 
-export interface City {
+export interface CityCard {
   id: number;
   name: string;
   // color: string;
+}
+
+export interface City extends CityCard {
   count: number;
 }
 

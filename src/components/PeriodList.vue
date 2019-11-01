@@ -1,6 +1,6 @@
 <template>
   <v-sheet elevation="1" class="my-1 pa-4">
-    <span class="body-1 period-title">{{ city.name }}</span>
+    <span class="body-1 period-title">{{ period.id }}</span>
   </v-sheet>
 </template>
 
@@ -9,7 +9,7 @@ import Vue from 'vue';
 
 export default Vue.extend({
   props: {
-    city: {
+    period: {
       required: true,
       type: Object,
     },
