@@ -9,9 +9,17 @@ import Vue from 'vue';
 
 export default Vue.extend({
   props: {
-    city: {
+    cityId: {
       required: true,
-      type: Object,
+      type: Number,
+    },
+  },
+  computed: {
+    city() {
+      return this.$store.state.deck[this.cityId] || {
+        id: -1,
+        name: 'Unknown City',
+      };
     },
   },
 });

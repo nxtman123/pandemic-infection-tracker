@@ -11,7 +11,12 @@ Vue.use(Vuex);
 export default new Vuex.Store<RootState>({
   state: {
     deck: [],
-    periods: [],
+    periods: [
+      {
+        id: 0,
+        cards: [3, 6, 1, 2, 2, 3],
+      },
+    ],
   },
   getters,
   mutations,

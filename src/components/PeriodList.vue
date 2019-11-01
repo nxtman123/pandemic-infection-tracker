@@ -1,17 +1,36 @@
 <template>
-  <v-sheet elevation="1" class="my-1 pa-4">
-    <span class="body-1 period-title">{{ period.id }}</span>
+  <v-sheet class="my-1 pa-4">
+    <span class="headline period-title">{{ title }}</span>
+    <city-card
+      v-for="{ cityId, index } in cards"
+      :key="index"
+      :cityId="cityId"
+    ></city-card>
   </v-sheet>
 </template>
 
 <script>
 import Vue from 'vue';
+import CityCard from '@/components/CityCard.vue';
 
 export default Vue.extend({
+  components: {
+    CityCard,
+  },
   props: {
     period: {
       required: true,
       type: Object,
+    },
+  },
+  computed: {
+    title() {
+      return `Period ${this.period.id + 1}`;
+    },
+    cards() {
+      const a = this.period.cards.map((cityId, index) => ({ cityId, index }));
+      console.log(a);
+      return a;
     },
   },
 });

@@ -1,7 +1,11 @@
 <template>
   <v-container>
     <h2 class="title">Cities</h2>
-    <city-card v-for="city in cities" :key="city.id" :city="city" ></city-card>
+    <city-card-count-control
+      v-for="city in cities"
+      :key="city.id"
+      :city="city"
+    ></city-card-count-control>
   </v-container>
 </template>
 
@@ -12,7 +16,7 @@ import CityCardCountControl from '@/components/CityCardCountControl.vue';
 
 export default Vue.extend({
   components: {
-    CityCard: CityCardCountControl,
+    CityCardCountControl,
   },
   computed: {
     ...mapGetters({
