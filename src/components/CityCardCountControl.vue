@@ -6,6 +6,7 @@
       thumb-label="always"
       hide-details
       class="mt-4"
+      color="secondary"
       label="Infection Cards"
       :value="city.count"
       @change="update"
