@@ -6,19 +6,29 @@
       thumb-label="always"
       hide-details
       class="mt-4"
-      v-model="city.count"
+      :value="city.count"
+      @change="update"
     ></v-slider>
   </v-sheet>
 </template>
 
 <script>
 import Vue from 'vue';
+import { mapMutations } from 'vuex';
 
 export default Vue.extend({
   props: {
     city: {
       required: true,
       type: Object,
+    },
+  },
+  methods: {
+    update(count) {
+      this.$store.dispatch('updateCity', {
+        ...this.city,
+        count,
+      });
     },
   },
 });

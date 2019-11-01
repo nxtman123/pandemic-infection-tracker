@@ -1,5 +1,5 @@
 import { ActionTree } from 'vuex';
-import { RootState } from '@/store/types';
+import { City, RootState } from '@/store/types';
 import persistApi from '@/api/persist';
 
 const actions: ActionTree<RootState, RootState> = {
@@ -12,7 +12,7 @@ const actions: ActionTree<RootState, RootState> = {
     }
   },
 
-  newDeck({ commit }) {
+  newDeck({ commit, dispatch }) {
     const cityNames: string[] = [
       'New York',
       'Washington',
@@ -31,7 +31,12 @@ const actions: ActionTree<RootState, RootState> = {
       'Mexico City',
     ];
     cityNames.forEach(name => commit('newCity', name));
-    // dispatch('persistState');
+    dispatch('persistState');
+  },
+
+  async updateCity({ commit, dispatch }, city: City) {
+    commit('updateCity', city);
+    dispatch('persistState');
   },
 
   async loadState({ commit }) {

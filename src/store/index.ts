@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import { RootState } from '@/store/types';
 import mutations from '@/store/mutations';
 import actions from '@/store/actions';
