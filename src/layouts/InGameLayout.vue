@@ -3,8 +3,8 @@
     <v-app-bar
       app
       clipped-left
+      flat
       color="primary"
-      elevation="0"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-toolbar-title>

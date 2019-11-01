@@ -18,5 +18,8 @@ export default Vue.extend({
       return this.$route.meta && this.$route.meta.title;
     },
   },
+  created() {
+    this.$store.dispatch('startup');
+  },
 });
 </script>

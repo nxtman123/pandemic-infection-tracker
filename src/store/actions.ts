@@ -4,6 +4,14 @@ import persistApi from '@/api/persist';
 
 const actions: ActionTree<RootState, RootState> = {
 
+  async startup({ dispatch }) {
+    if (await persistApi.hasData()) {
+      dispatch('loadState');
+    } else {
+      dispatch('newDeck');
+    }
+  },
+
   newDeck({ commit }) {
     const cityNames: string[] = [
       'New York',
@@ -23,6 +31,7 @@ const actions: ActionTree<RootState, RootState> = {
       'Mexico City',
     ];
     cityNames.forEach(name => commit('newCity', name));
+    // dispatch('persistState');
   },
 
   async loadState({ commit }) {
