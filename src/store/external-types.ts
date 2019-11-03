@@ -6,15 +6,31 @@ export interface ICity {
   cardCount: number;
 }
 
-export interface IPeriod {
-  id: number,
-  cards: ICityCardInPeriod[],
+export interface ICardGroup {
+  id: number;
+  cards: ICityCardInGroup[];
+  current: boolean;
 }
 
-export interface ICityCardInPeriod {
+export interface ICityCardInGroup {
   cityId: number;
   name: string;
   // color: string;
-  periodId: number;
   position: number;
+}
+
+export interface IPeriod extends ICardGroup {
+  cards: ICityCardInPeriod[];
+}
+
+export interface ICityCardInPeriod extends ICityCardInGroup {
+  periodId: number;
+}
+
+export interface ISegment extends ICardGroup {
+  cards: ICityCardInSegment[];
+}
+
+export interface ICityCardInSegment extends ICityCardInGroup {
+  segmentId: number;
 }
