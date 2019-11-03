@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import InfectionDeck from '@/pages/InfectionDeck.vue';
-import GameSetup from '@/pages/GameSetup.vue';
+import Setup from '@/pages/Setup.vue';
+import Play from '@/pages/Play.vue';
 import Forecast from '@/pages/Forecast.vue';
 
 Vue.use(VueRouter);
@@ -12,17 +12,17 @@ const routes: RouteConfig[] = [
     path: '/setup',
     name: 'setup',
     components: {
-      default: GameSetup,
+      default: Setup,
     },
-    meta: { title: 'Game Setup' },
+    meta: { title: 'Setup' },
   },
   {
-    path: '/infection',
-    name: 'infection',
+    path: '/play',
+    name: 'play',
     components: {
-      default: InfectionDeck,
+      default: Play,
     },
-    meta: { title: 'Infection Deck' },
+    meta: { title: 'Play' },
   },
   {
     path: '/forecast',

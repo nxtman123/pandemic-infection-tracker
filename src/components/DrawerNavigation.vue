@@ -5,15 +5,15 @@
         <v-icon>mdi-numeric-1-box</v-icon>
       </v-list-item-action>
       <v-list-item-content>
-        Game Setup
+        Setup
       </v-list-item-content>
     </v-list-item>
-    <v-list-item link to="infection">
+    <v-list-item link to="play">
       <v-list-item-action>
         <v-icon>mdi-cards</v-icon>
       </v-list-item-action>
       <v-list-item-content>
-        Infection Deck
+        Play
       </v-list-item-content>
     </v-list-item>
     <v-list-item link to="forecast">
