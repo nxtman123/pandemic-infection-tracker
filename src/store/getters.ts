@@ -1,23 +1,18 @@
 import { GetterTree } from 'vuex';
-import { City, Period, RootState } from '@/store/types';
+import { RootState } from './types';
+import { IPeriod } from './external-types';
 
 interface Getters extends GetterTree<RootState, RootState> {
-  citiesAlphabetically: (s: RootState) => City[];
-  periods: (s: RootState) => Period[];
+  periods: (s: RootState, _:any, rs: RootState) => IPeriod[];
 }
 
 const getters: Getters = {
 
-  citiesAlphabetically(state: RootState): City[] {
-    const deck = [...state.deck];
-    return deck.sort((a, b) => (a.name <= b.name ? -1 : 1));
-  },
-
-  periods(state: RootState): Period[] {
+  periods(state: RootState, _:any, rootState: RootState): IPeriod[] {
     return state.periods.map((cityIds, periodId) => ({
       id: periodId,
       cards: cityIds.map((cityId, position) => ({
-        ...state.deck[cityId],
+        ...rootState.infectionDeck.deck[cityId],
         position,
       })),
     }));
