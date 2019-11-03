@@ -5,10 +5,10 @@
     color="primary"
   >
     <span class="body-1 period-title">{{ card.name }}</span>
-    <div>
-      <v-btn icon><v-icon>mdi-arrow-up</v-icon></v-btn>
-      <v-btn icon><v-icon>mdi-arrow-down</v-icon></v-btn>
-    </div>
+<!--    <div>-->
+<!--      <v-btn icon><v-icon>mdi-arrow-up</v-icon></v-btn>-->
+<!--      <v-btn icon><v-icon>mdi-arrow-down</v-icon></v-btn>-->
+<!--    </div>-->
     <div>
       <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
     </div>
