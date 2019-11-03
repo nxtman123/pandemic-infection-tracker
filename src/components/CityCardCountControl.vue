@@ -26,7 +26,7 @@ export default Vue.extend({
   },
   methods: {
     update(cardCount) {
-      this.$store.commit('updateCity', {
+      this.$store.commit('updateCityCardCount', {
         ...this.city,
         cardCount,
       });

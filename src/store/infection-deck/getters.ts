@@ -17,12 +17,7 @@ const getters: Getters = {
 
   citiesAlphabetically(state: InfectionDeckState): ICity[] {
     const deck = [...state.deck];
-    return deck
-      .sort((a, b) => (a.name <= b.name ? -1 : 1))
-      .map((city: City, id: number) => ({
-        id,
-        ...city,
-      }));
+    return deck.sort((a, b) => (a.name <= b.name ? -1 : 1));
   },
 
 };

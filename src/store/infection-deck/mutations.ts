@@ -6,13 +6,16 @@ const mutations: MutationTree<InfectionDeckState> = {
 
   newCity(state: InfectionDeckState, name: string) {
     state.deck.push({
+      id: state.deck.length,
       name,
       cardCount: 0,
     });
   },
 
-  updateCity(state: InfectionDeckState, city: ICity) {
-    state.deck.splice(city.id, 1, city);
+  updateCityCardCount(state: InfectionDeckState, newCity: ICity) {
+    const oldCity = state.deck.find(c => c.id === newCity.id);
+    console.log(oldCity);
+    if (oldCity) oldCity.cardCount = newCity.cardCount;
   },
 
 };
