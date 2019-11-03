@@ -10,7 +10,10 @@
 <!--      <v-btn icon><v-icon>mdi-arrow-down</v-icon></v-btn>-->
 <!--    </div>-->
     <div>
-      <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
+      <v-btn
+        icon
+        @click="removeCardFromPeriod"
+      ><v-icon>mdi-close</v-icon></v-btn>
     </div>
   </v-sheet>
 </template>
@@ -23,6 +26,11 @@ export default Vue.extend({
     card: {
       required: true,
       type: Object,
+    },
+  },
+  methods: {
+    removeCardFromPeriod() {
+      this.$store.dispatch('removeCardFromPeriod', this.card);
     },
   },
 });

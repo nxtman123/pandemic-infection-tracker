@@ -16,7 +16,6 @@
 
 <script>
 import Vue from 'vue';
-import { mapMutations } from 'vuex';
 
 export default Vue.extend({
   props: {

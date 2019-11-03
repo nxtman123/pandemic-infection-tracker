@@ -18,6 +18,7 @@ const getters: Getters = {
       id: periodId,
       cards: cityIds.map((cityId, position) => ({
         ...rootState.infectionDeck.deck[cityId],
+        periodId,
         position,
       })),
     }));

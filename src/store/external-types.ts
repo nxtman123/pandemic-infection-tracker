@@ -4,12 +4,13 @@ export interface ICity extends City{}
 
 export interface IPeriod {
   id: number,
-  cards: ICityCard[],
+  cards: ICityCardInPeriod[],
 }
 
-export interface ICityCard {
+export interface ICityCardInPeriod {
   id: number;
   name: string;
   // color: string;
+  periodId: number;
   position: number;
 }
