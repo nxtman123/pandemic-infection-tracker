@@ -10,7 +10,7 @@
     </v-list-item>
     <v-list-item link to="record">
       <v-list-item-action>
-        <v-icon>mdi-record</v-icon>
+        <v-icon>mdi-playlist-edit</v-icon>
       </v-list-item-action>
       <v-list-item-content>
         Record

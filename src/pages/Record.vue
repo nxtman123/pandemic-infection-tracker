@@ -1,5 +1,15 @@
 <template>
-  <v-container class="pb-12 mb-12">
+  <v-container class="pb-12" :class="{ 'fill-height': this.periods.length === 0 }">
+    <div
+      v-if="this.periods.length === 0"
+      class="mx-auto d-flex flex-column justify-center align-center"
+    >
+      <v-icon large>mdi-playlist-edit</v-icon>
+      <p class="subtitle-2">No game history</p>
+      <p class="caption">
+        Press the <v-icon dense>mdi-biohazard</v-icon> button to start a period.
+      </p>
+    </div>
     <period
       v-for="period in this.periods"
       :key="period.id"

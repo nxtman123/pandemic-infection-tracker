@@ -50,11 +50,11 @@ export default Vue.extend({
   },
   methods: {
     drawCard(city) {
+      this.dialog = false;
       this.$store.commit('addCardToPeriod', {
         cityId: city.id,
         periodId: this.periodId,
       });
-      this.dialog = false;
     },
   },
 });
