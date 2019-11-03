@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Setup from '@/pages/Setup.vue';
-import Play from '@/pages/Play.vue';
+import Record from '@/pages/Record.vue';
+import Model from '@/pages/Model.vue';
 import Forecast from '@/pages/Forecast.vue';
 
 Vue.use(VueRouter);
@@ -17,12 +18,20 @@ const routes: RouteConfig[] = [
     meta: { title: 'Setup' },
   },
   {
-    path: '/play',
-    name: 'play',
+    path: '/record',
+    name: 'record',
     components: {
-      default: Play,
+      default: Record,
     },
-    meta: { title: 'Play' },
+    meta: { title: 'Record' },
+  },
+  {
+    path: '/model',
+    name: 'model',
+    components: {
+      default: Model,
+    },
+    meta: { title: 'Model' },
   },
   {
     path: '/forecast',

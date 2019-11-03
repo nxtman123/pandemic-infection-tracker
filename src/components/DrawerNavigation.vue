@@ -8,12 +8,20 @@
         Setup
       </v-list-item-content>
     </v-list-item>
-    <v-list-item link to="play">
+    <v-list-item link to="record">
+      <v-list-item-action>
+        <v-icon>mdi-record</v-icon>
+      </v-list-item-action>
+      <v-list-item-content>
+        Record
+      </v-list-item-content>
+    </v-list-item>
+    <v-list-item link to="model">
       <v-list-item-action>
         <v-icon>mdi-cards</v-icon>
       </v-list-item-action>
       <v-list-item-content>
-        Play
+        Model
       </v-list-item-content>
     </v-list-item>
     <v-list-item link to="forecast">
