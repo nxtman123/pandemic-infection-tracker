@@ -1,7 +1,7 @@
 import { GetterTree } from 'vuex';
-import { InfectionDeckState } from './types';
 import { ICity } from '@/store/external-types';
 import { RootState } from '@/store/types';
+import { InfectionDeckState } from './types';
 
 interface Getters extends GetterTree<InfectionDeckState, RootState> {
   citiesAlphabetically: (s: InfectionDeckState) => ICity[];

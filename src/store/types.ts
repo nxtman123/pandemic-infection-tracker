@@ -1,5 +1,7 @@
-export interface RootState {
-  periods: PeriodState[];
-}
+import { InfectionDeckState } from '@/store/infection-deck/types';
+import { PeriodsState } from '@/store/periods/types';
 
-export type PeriodState = number[];
+export interface RootState {
+  infectionDeck: InfectionDeckState;
+  periods: PeriodsState;
+}

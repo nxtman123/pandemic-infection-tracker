@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
-import { InfectionDeckState } from '@/store/infection-deck/types';
 import { ICity } from '@/store/external-types';
+import { InfectionDeckState } from './types';
 
 const mutations: MutationTree<InfectionDeckState> = {
 

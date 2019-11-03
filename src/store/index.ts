@@ -6,22 +6,17 @@ import mutations from '@/store/mutations';
 import actions from '@/store/actions';
 import getters from '@/store/getters';
 import infectionDeck from '@/store/infection-deck';
+import periods from '@/store/periods';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store<RootState>({
-  state: {
-    periods: [
-      [3, 6, 1, 2, 2, 3],
-      [3, 2, 2, 3],
-      [2, 3],
-    ],
-  },
   getters,
   mutations,
   actions,
   modules: {
     infectionDeck,
+    periods,
   },
   strict: true,
 });
