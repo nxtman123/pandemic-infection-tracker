@@ -26,7 +26,7 @@ export default Vue.extend({
   },
   methods: {
     update(count) {
-      this.$store.dispatch('updateCity', {
+      this.$store.commit('updateCity', {
         ...this.city,
         count,
       });

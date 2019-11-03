@@ -17,17 +17,12 @@ export default Vue.extend({
     title() {
       return this.$route.meta && this.$route.meta.title;
     },
-    appState() {
-      return this.$store.state;
-    },
   },
   mounted() {
     this.$store.dispatch('startup');
-  },
-  watch: {
-    appState() {
+    this.$store.subscribe(() => {
       this.$store.dispatch('persistState');
-    },
+    });
   },
 });
 </script>

@@ -6,15 +6,11 @@ const actions: ActionTree<RootState, RootState> = {
 
   async startup({ dispatch }) {
     if (await persistApi.hasData()) {
-      dispatch('loadState');
+      const state = await persistApi.load();
+      if (state) this.replaceState(state);
     } else {
       dispatch('newDeck');
     }
-  },
-
-  async loadState({ commit }) {
-    const state = await persistApi.load();
-    commit('setState', state);
   },
 
   async persistState({ state }) {

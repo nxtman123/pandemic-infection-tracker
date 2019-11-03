@@ -5,7 +5,7 @@ import { ICity } from '@/store/external-types';
 
 const actions: ActionTree<InfectionDeckState, RootState> = {
 
-  newDeck({ commit, dispatch }) {
+  newDeck({ commit }) {
     const cityNames: string[] = [
       'New York',
       'Washington',
@@ -24,12 +24,6 @@ const actions: ActionTree<InfectionDeckState, RootState> = {
       'Mexico City',
     ];
     cityNames.forEach(name => commit('newCity', name));
-    dispatch('persistState');
-  },
-
-  async updateCity({ commit, dispatch }, city: ICity) {
-    commit('updateCity', city);
-    dispatch('persistState');
   },
 
 };
