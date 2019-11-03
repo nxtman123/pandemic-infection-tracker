@@ -6,9 +6,8 @@ const mutations: MutationTree<InfectionDeckState> = {
 
   newCity(state: InfectionDeckState, name: string) {
     state.deck.push({
-      id: state.deck.length,
       name,
-      count: 0,
+      cardCount: 0,
     });
   },
 

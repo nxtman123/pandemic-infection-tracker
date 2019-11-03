@@ -8,7 +8,7 @@
       ticks="always"
       color="secondary"
       label="Infection Cards"
-      :value="city.count"
+      :value="city.cardCount"
       @change="update"
     ></v-slider>
   </v-sheet>
@@ -25,10 +25,10 @@ export default Vue.extend({
     },
   },
   methods: {
-    update(count) {
+    update(cardCount) {
       this.$store.commit('updateCity', {
         ...this.city,
-        count,
+        cardCount,
       });
     },
   },

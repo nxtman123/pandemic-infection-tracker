@@ -2,46 +2,25 @@
   <v-sheet class="my-1 pa-4">
     <div class="d-flex justify-space-between mb-2">
       <span class="headline period-title">{{ title }}</span>
-      <v-btn
-        icon
-        @click="remove"
-      ><v-icon>mdi-close</v-icon></v-btn>
+      <v-btn icon @click="remove"><v-icon>mdi-close</v-icon></v-btn>
     </div>
     <city-card
       v-for="card in period.cards"
       :key="card.position"
       :card="card"
     ></city-card>
-    <v-dialog
-      scrollable
-      max-width="15em"
-      v-model="drawCardDialog"
-    >
-      <template v-slot:activator="{ on }">
-        <v-btn
-          depressed
-          color="secondary"
-          width="100%"
-          class="d-block mt-2"
-          v-on="on"
-        ><v-icon>mdi-plus</v-icon></v-btn>
-      </template>
-      <draw-card-dialog
-        :periodId="period.id"
-        @close="drawCardDialog = false"
-      ></draw-card-dialog>
-    </v-dialog>
+    <draw-card-button :period-id="period.id"></draw-card-button>
   </v-sheet>
 </template>
 
 <script>
 import Vue from 'vue';
 import CityCard from '@/components/CityCard.vue';
-import DrawCardDialog from '@/components/DrawCardDialog.vue';
+import DrawCardButton from '@/components/DrawCardButton.vue';
 
 export default Vue.extend({
   components: {
-    DrawCardDialog,
+    DrawCardButton,
     CityCard,
   },
   props: {
@@ -50,9 +29,6 @@ export default Vue.extend({
       type: Object,
     },
   },
-  data: () => ({
-    drawCardDialog: false,
-  }),
   computed: {
     title() {
       return `Period ${this.period.id + 1}`;

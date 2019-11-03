@@ -1,7 +1,6 @@
 import { ActionTree } from 'vuex';
 import { InfectionDeckState } from '@/store/infection-deck/types';
 import { RootState } from '@/store/types';
-import { ICity } from '@/store/external-types';
 
 const actions: ActionTree<InfectionDeckState, RootState> = {
 

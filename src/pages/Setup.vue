@@ -2,7 +2,7 @@
   <v-container>
     <h2 class="title">Cities</h2>
     <city-card-count-control
-      v-for="city in cities"
+      v-for="city in this.cities"
       :key="city.id"
       :city="city"
     ></city-card-count-control>

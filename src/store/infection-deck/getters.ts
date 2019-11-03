@@ -1,17 +1,28 @@
 import { GetterTree } from 'vuex';
 import { ICity } from '@/store/external-types';
 import { RootState } from '@/store/types';
-import { InfectionDeckState } from './types';
+import { City, InfectionDeckState } from './types';
 
 interface Getters extends GetterTree<InfectionDeckState, RootState> {
+  cityFromId: (s: InfectionDeckState) => (c: number) => ICity;
   citiesAlphabetically: (s: InfectionDeckState) => ICity[];
 }
 
 const getters: Getters = {
 
+  cityFromId: (state: InfectionDeckState) => (id: number) => ({
+    id,
+    ...state.deck[id],
+  }),
+
   citiesAlphabetically(state: InfectionDeckState): ICity[] {
     const deck = [...state.deck];
-    return deck.sort((a, b) => (a.name <= b.name ? -1 : 1));
+    return deck
+      .sort((a, b) => (a.name <= b.name ? -1 : 1))
+      .map((city: City, id: number) => ({
+        id,
+        ...city,
+      }));
   },
 
 };

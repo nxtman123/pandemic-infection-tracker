@@ -4,8 +4,7 @@ export interface InfectionDeckState {
 }
 
 export interface City {
-  id: number;
   name: string;
   // color: string;
-  count: number;
+  cardCount: number;
 }

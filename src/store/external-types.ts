@@ -1,6 +1,10 @@
-import { City } from '@/store/infection-deck/types';
 
-export interface ICity extends City{}
+export interface ICity {
+  id: number;
+  name: string;
+  // color: string;
+  cardCount: number;
+}
 
 export interface IPeriod {
   id: number,

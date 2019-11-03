@@ -1,13 +1,17 @@
 <template>
   <v-container class="pb-12 mb-12">
-    <period-list v-for="period in periods" :period="period" :key="period.id"></period-list>
+    <period
+      v-for="period in this.periods"
+      :key="period.id"
+      :period="period"
+    ></period>
     <v-btn
       fixed
       fab
       bottom
       right
       color="secondary"
-      @click="addPeriod"
+      @click="this.addPeriod"
     >
       <v-icon x-large>mdi-biohazard</v-icon>
     </v-btn>
@@ -17,11 +21,11 @@
 <script>
 import Vue from 'vue';
 import { mapGetters, mapMutations } from 'vuex';
-import PeriodList from '@/components/PeriodList.vue';
+import Period from '@/components/Period.vue';
 
 export default Vue.extend({
   components: {
-    PeriodList,
+    Period,
   },
   computed: {
     ...mapGetters([
