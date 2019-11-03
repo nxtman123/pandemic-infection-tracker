@@ -8,7 +8,7 @@ export interface IPeriod {
 }
 
 export interface ICityCardInPeriod {
-  id: number;
+  cityId: number;
   name: string;
   // color: string;
   periodId: number;

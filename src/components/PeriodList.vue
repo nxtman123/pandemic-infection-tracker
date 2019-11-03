@@ -12,21 +12,36 @@
       :key="card.position"
       :card="card"
     ></city-card>
-    <v-btn
-      depressed
-      color="secondary"
-      width="100%"
-      class="d-block mt-2"
-    ><v-icon>mdi-plus</v-icon></v-btn>
+    <v-dialog
+      scrollable
+      max-width="15em"
+      v-model="drawCardDialog"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          depressed
+          color="secondary"
+          width="100%"
+          class="d-block mt-2"
+          v-on="on"
+        ><v-icon>mdi-plus</v-icon></v-btn>
+      </template>
+      <draw-card-dialog
+        :periodId="period.id"
+        @close="drawCardDialog = false"
+      ></draw-card-dialog>
+    </v-dialog>
   </v-sheet>
 </template>
 
 <script>
 import Vue from 'vue';
 import CityCard from '@/components/CityCard.vue';
+import DrawCardDialog from '@/components/DrawCardDialog.vue';
 
 export default Vue.extend({
   components: {
+    DrawCardDialog,
     CityCard,
   },
   props: {
@@ -35,6 +50,9 @@ export default Vue.extend({
       type: Object,
     },
   },
+  data: () => ({
+    drawCardDialog: false,
+  }),
   computed: {
     title() {
       return `Period ${this.period.id + 1}`;
@@ -42,7 +60,7 @@ export default Vue.extend({
   },
   methods: {
     remove() {
-      this.$store.dispatch('removePeriod', this.period);
+      this.$store.commit('removePeriod', this.period);
     },
   },
 });

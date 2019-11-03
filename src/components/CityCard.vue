@@ -30,7 +30,7 @@ export default Vue.extend({
   },
   methods: {
     removeCardFromPeriod() {
-      this.$store.dispatch('removeCardFromPeriod', this.card);
+      this.$store.commit('removeCardFromPeriod', this.card);
     },
   },
 });

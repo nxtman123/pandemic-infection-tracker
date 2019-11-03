@@ -7,7 +7,7 @@
       bottom
       right
       color="secondary"
-      @click="epidemic"
+      @click="addPeriod"
     >
       <v-icon x-large>mdi-biohazard</v-icon>
     </v-btn>
@@ -16,7 +16,7 @@
 
 <script>
 import Vue from 'vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import PeriodList from '@/components/PeriodList.vue';
 
 export default Vue.extend({
@@ -29,8 +29,8 @@ export default Vue.extend({
     ]),
   },
   methods: {
-    ...mapActions([
-      'epidemic',
+    ...mapMutations([
+      'addPeriod',
     ]),
   },
 });
