@@ -15,7 +15,6 @@ export default new Vuex.Store<RootState>({
       [3, 6, 1, 2, 2, 3],
       [3, 2, 2, 3],
       [2, 3],
-      [3, 6, 1, 2, 2, 3, 3, 1, 2, 2],
     ],
   },
   getters,

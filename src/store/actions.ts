@@ -39,6 +39,11 @@ const actions: ActionTree<RootState, RootState> = {
     dispatch('persistState');
   },
 
+  async epidemic({ commit, dispatch }) {
+    commit('epidemic');
+    dispatch('persistState');
+  },
+
   async loadState({ commit }) {
     const state = await persistApi.load();
     commit('setState', state);

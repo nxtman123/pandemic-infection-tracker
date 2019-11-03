@@ -15,6 +15,10 @@ const mutations: MutationTree<RootState> = {
     state.deck.splice(city.id, 1, city);
   },
 
+  epidemic(state: RootState) {
+    state.periods.push([]);
+  },
+
   setState(state: RootState, newState: RootState) {
     state.deck = newState.deck;
     state.periods = newState.periods;
