@@ -74,7 +74,6 @@ const getters: Getters = {
         model.push(discard);
       });
     } catch (e) {
-      console.error(e);
       return null;
     }
 
@@ -95,9 +94,11 @@ const getters: Getters = {
   },
 
   forecast(state: PeriodsState, get: any, __: any, rootGetters: any): ICityForecast[] | null {
+    // set up
     const cities = [...rootGetters.citiesAlphabetically];
     if (get.model === null) return null;
     const model: ISegment[] = [...get.model];
+    if (model.length === 0) return [];
     if (model[0].current) model.splice(0, 1);
     const segmentLengths = model.map((segment: ISegment) => segment.cards.length);
 
