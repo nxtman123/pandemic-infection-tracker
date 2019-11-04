@@ -13,23 +13,23 @@ interface Getters extends GetterTree<PeriodsState, RootState> {
     => ICityForecast[] | null;
 }
 
-const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, cardsDrawn: number) => {
-  let cardsInSegment = segment.cards.length;
-  let selectCityCards = 0;
+const appearancesOfCityInSegment = (city: ICity, segment: ISegment) => {
+  let appearances = 0;
   segment.cards.forEach((card: ICityCardInSegment) => {
-    if (card.cityId === city.id) selectCityCards += 1;
+    if (card.cityId === city.id) appearances += 1;
   });
-  let nonSelectCityCards = cardsInSegment - selectCityCards;
+  return appearances;
+};
 
-  let chanceDrawnOnLastDraw = 1;
-  let chanceDrawn = selectCityCards / cardsInSegment;
-  for (let cards = 1; cards < cardsDrawn; cards += 1) {
-    chanceDrawnOnLastDraw *= nonSelectCityCards / cardsInSegment;
-    chanceDrawn += chanceDrawnOnLastDraw * selectCityCards / cardsInSegment;
-    nonSelectCityCards -= 1;
-    cardsInSegment -= 1;
-  }
-  return chanceDrawn;
+const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, cardsDrawn: number) => {
+  const cardsInSegment = segment.cards.length;
+  const selectCityCards = appearancesOfCityInSegment(city, segment);
+  const nonSelectCityCards = cardsInSegment - selectCityCards;
+
+  // TODO fix probability calc
+  // https://math.stackexchange.com/questions/2080203/40-cards-4-are-aces-probability-of-1-ace-when-drawing-2-cards-at-ramdo?rq=1
+
+  return selectCityCards / cardsInSegment;
 };
 
 const getters: Getters = {
@@ -127,7 +127,7 @@ const getters: Getters = {
         }
 
         if (cardsDrawnThisSegment === segmentLengths[segmentIndex]) {
-          guaranteedDraws += cardsDrawnThisSegment;
+          guaranteedDraws += appearancesOfCityInSegment(city, model[segmentIndex]);
           forecast.push(guaranteedDraws);
         } else {
           const chance = chanceOfFindingCityInSegment(
