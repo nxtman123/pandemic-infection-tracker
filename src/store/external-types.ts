@@ -34,3 +34,11 @@ export interface ISegment extends ICardGroup {
 export interface ICityCardInSegment extends ICityCardInGroup {
   segmentId: number;
 }
+
+export interface ICityForecast {
+  id: number;
+  name: string;
+  // color: string;
+  forecast: number[];
+  bottomCardChance: number;
+}

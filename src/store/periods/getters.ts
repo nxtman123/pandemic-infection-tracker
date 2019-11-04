@@ -1,5 +1,7 @@
 import { GetterTree } from 'vuex';
-import { IPeriod, ISegment } from '@/store/external-types';
+import {
+  ICity, ICityCardInSegment, ICityForecast, IPeriod, ISegment,
+} from '@/store/external-types';
 import { RootState } from '@/store/types';
 import { PeriodsState } from './types';
 
@@ -7,7 +9,17 @@ interface Getters extends GetterTree<PeriodsState, RootState> {
   periods: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>) => IPeriod[];
   model: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>)
     => ISegment[] | null;
+  forecast: (s: PeriodsState, g: any, __: any, rg: GetterTree<RootState, RootState>)
+    => ICityForecast[] | null;
 }
+
+const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment) => {
+  let appearances = 0;
+  segment.cards.forEach((card: ICityCardInSegment) => {
+    if (card.cityId === city.id) appearances += 1;
+  });
+  return appearances / segment.cards.length;
+};
 
 const getters: Getters = {
 
@@ -80,6 +92,44 @@ const getters: Getters = {
       }).sort((a, b) => (a.name <= b.name ? -1 : 1)),
       current: segmentId !== 0 && segmentId === model.length - 1,
     })).reverse();
+  },
+
+  forecast(state: PeriodsState, get: any, __: any, rootGetters: any): ICityForecast[] | null {
+    const cities = [...rootGetters.citiesAlphabetically];
+    if (get.model === null) return null;
+    const model: ISegment[] = [...get.model];
+    if (model[0].current) model.splice(0, 1);
+    const segmentLengths = model.map((segment: ISegment) => segment.cards.length);
+
+    return cities.map((city) => {
+      const segmentProbabilities = model.map(
+        (segment: ISegment) => chanceOfFindingCityInSegment(city, segment),
+      );
+
+      // forecast
+      const forecast: number[] = [];
+      let segmentIndex = 0;
+      let cardsLeftInSegment = segmentLengths[segmentIndex];
+      let probability = 0;
+      for (let i = 0; i < 9; i += 1) {
+        probability += segmentProbabilities[segmentIndex];
+        forecast.push(probability);
+
+        cardsLeftInSegment -= 1;
+        if (cardsLeftInSegment <= 0) {
+          segmentIndex += 1;
+          cardsLeftInSegment = segmentLengths[segmentIndex];
+        }
+      }
+
+      const cityForecast: ICityForecast = {
+        id: city.id,
+        name: city.name,
+        forecast,
+        bottomCardChance: chanceOfFindingCityInSegment(city, model[model.length - 1]),
+      };
+      return cityForecast;
+    });
   },
 
 };
