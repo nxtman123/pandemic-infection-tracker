@@ -13,12 +13,23 @@ interface Getters extends GetterTree<PeriodsState, RootState> {
     => ICityForecast[] | null;
 }
 
-const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment) => {
-  let appearances = 0;
+const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, cardsDrawn: number) => {
+  let cardsInSegment = segment.cards.length;
+  let selectCityCards = 0;
   segment.cards.forEach((card: ICityCardInSegment) => {
-    if (card.cityId === city.id) appearances += 1;
+    if (card.cityId === city.id) selectCityCards += 1;
   });
-  return appearances / segment.cards.length;
+  let nonSelectCityCards = cardsInSegment - selectCityCards;
+
+  let chanceDrawnOnLastDraw = 1;
+  let chanceDrawn = selectCityCards / cardsInSegment;
+  for (let cards = 1; cards < cardsDrawn; cards += 1) {
+    chanceDrawnOnLastDraw *= nonSelectCityCards / cardsInSegment;
+    chanceDrawn += chanceDrawnOnLastDraw * selectCityCards / cardsInSegment;
+    nonSelectCityCards -= 1;
+    cardsInSegment -= 1;
+  }
+  return chanceDrawn;
 };
 
 const getters: Getters = {
@@ -103,10 +114,6 @@ const getters: Getters = {
     const segmentLengths = model.map((segment: ISegment) => segment.cards.length);
 
     return cities.map((city) => {
-      const segmentProbabilities = model.map(
-        (segment: ISegment) => chanceOfFindingCityInSegment(city, segment),
-      );
-
       // forecast
       const forecast: number[] = [];
       let guaranteedDraws = 0;
@@ -119,11 +126,14 @@ const getters: Getters = {
           segmentIndex += 1;
         }
 
-        forecast.push(guaranteedDraws
-          + (cardsDrawnThisSegment * segmentProbabilities[segmentIndex]));
-
         if (cardsDrawnThisSegment === segmentLengths[segmentIndex]) {
-          guaranteedDraws += cardsDrawnThisSegment * segmentProbabilities[segmentIndex];
+          guaranteedDraws += cardsDrawnThisSegment;
+          forecast.push(guaranteedDraws);
+        } else {
+          const chance = chanceOfFindingCityInSegment(
+            city, model[segmentIndex], cardsDrawnThisSegment,
+          );
+          forecast.push(guaranteedDraws + chance);
         }
       }
 
@@ -131,7 +141,7 @@ const getters: Getters = {
         id: city.id,
         name: city.name,
         forecast,
-        bottomCardChance: chanceOfFindingCityInSegment(city, model[model.length - 1]),
+        bottomCardChance: chanceOfFindingCityInSegment(city, model[model.length - 1], 1),
       };
       return cityForecast;
     });
