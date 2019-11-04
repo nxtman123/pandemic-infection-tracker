@@ -1,29 +1,22 @@
 <template>
-  <v-container
-    :class="{ 'fill-height': this.model === null || this.model.length === 0 }"
+  <empty-page-message
+    v-if="this.model === null"
+    icon-name="mdi-card-bulleted-off"
+    message="Bad Card"
   >
-    <div
-      v-if="this.model === null"
-      class="mx-auto d-flex flex-column justify-center align-center"
-    >
-      <v-icon large class="mb-2">mdi-alert-circle-outline</v-icon>
-      <p class="subtitle-2">Error</p>
-      <p class="caption">
-        There was an unexpected card in the record.
-      </p>
-    </div>
-    <div
-      v-else-if="this.model.length === 0"
-      class="mx-auto d-flex flex-column justify-center align-center"
-    >
-      <v-icon large class="mb-2">mdi-image-filter-none</v-icon>
-      <p class="subtitle-2">No model</p>
-      <p class="caption">
-        Use the Setup page to add cards to the deck.
-      </p>
-    </div>
+    There was an unexpected card in the record.
+  </empty-page-message>
+  <empty-page-message
+    v-else-if="this.model.length === 0"
+    icon-name="mdi-image-filter-none"
+    message="No model"
+  >
+    Use the Setup page to add cards to the deck.
+  </empty-page-message>
+  <v-container v-else>
     <v-sheet
       class="my-2 pa-1"
+      :class="{ 'mb-8': segment.current }"
       :color="segment.current ? 'secondary' : 'primary'"
       v-for="segment in this.model"
       :key="segment.id"
@@ -43,8 +36,12 @@
 <script>
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
+import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
 
 export default Vue.extend({
+  components: {
+    EmptyPageMessage,
+  },
   computed: {
     ...mapGetters([
       'model',

@@ -1,15 +1,22 @@
 <template>
-  <v-container class="pb-12" :class="{ 'fill-height': this.periods.length === 0 }">
-    <div
-      v-if="this.periods.length === 0"
-      class="mx-auto d-flex flex-column justify-center align-center"
+  <empty-page-message
+    v-if="this.periods.length === 0"
+    icon-name="mdi-playlist-edit"
+    message="No game history"
+  >
+    Press the <v-icon dense>mdi-biohazard</v-icon> button to start a period.
+    <v-btn
+      fixed
+      fab
+      bottom
+      right
+      color="secondary"
+      @click="this.addPeriod"
     >
-      <v-icon large class="mb-2">mdi-playlist-edit</v-icon>
-      <p class="subtitle-2">No game history</p>
-      <p class="caption">
-        Press the <v-icon dense>mdi-biohazard</v-icon> button to start a period.
-      </p>
-    </div>
+      <v-icon x-large>mdi-biohazard</v-icon>
+    </v-btn>
+  </empty-page-message>
+  <v-container class="pb-12" v-else>
     <period
       v-for="period in this.periods"
       :key="period.id"
@@ -32,10 +39,12 @@
 import Vue from 'vue';
 import { mapGetters, mapMutations } from 'vuex';
 import Period from '@/components/Period.vue';
+import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
 
 export default Vue.extend({
   components: {
     Period,
+    EmptyPageMessage,
   },
   computed: {
     ...mapGetters([

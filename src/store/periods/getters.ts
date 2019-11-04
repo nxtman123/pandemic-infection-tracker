@@ -30,7 +30,11 @@ const getters: Getters = {
   model(state: PeriodsState, _: any, __: any, rootGetters: any): ISegment[] | null {
     // set up
     const deck: number[] = [...rootGetters.deckAsCardIds];
-    if (deck.length === 0) return [];
+    if (deck.length === 0) {
+      if (state.periods.length === 0
+        || (state.periods.length === 1 && state.periods[0].length === 0)) return [];
+      return null;
+    }
     const model: number[][] = [deck];
 
     // carry out the record
@@ -42,17 +46,18 @@ const getters: Getters = {
           const index = lastSegment.indexOf(card);
           if (index >= 0) {
             lastSegment.splice(index, 1);
+            if (lastSegment.length === 0) model.pop();
           } else {
             const firstSegment = model[0];
             const idx = firstSegment.indexOf(card);
             if (idx >= 0) {
               firstSegment.splice(idx, 1);
+              if (firstSegment.length === 0) model.splice(0, 1);
             } else {
               throw Error(`Couldn't find card with cityId ${card} in first segment`);
             }
           }
           discard.push(card);
-          if (lastSegment.length === 0) model.pop();
         });
         model.push(discard);
       });
