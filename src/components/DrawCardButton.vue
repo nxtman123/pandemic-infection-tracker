@@ -11,12 +11,14 @@
         width="100%"
         class="d-block mt-2"
         v-on="on"
-      ><v-icon>mdi-plus</v-icon></v-btn>
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
     </template>
     <v-card>
       <v-card-title>Draw Card</v-card-title>
       <v-divider></v-divider>
-      <v-list>
+      <v-list class="overflow-y-auto">
         <v-list-item
           v-for="city in this.cities"
           :key="city.id"
