@@ -108,17 +108,21 @@ const getters: Getters = {
 
       // forecast
       const forecast: number[] = [];
-      let segmentIndex = 0;
-      let cardsLeftInSegment = segmentLengths[segmentIndex];
-      let probability = 0;
-      for (let i = 0; i < 9; i += 1) {
-        probability += segmentProbabilities[segmentIndex];
-        forecast.push(probability);
+      let guaranteedDraws = 0;
 
-        cardsLeftInSegment -= 1;
-        if (cardsLeftInSegment <= 0) {
+      for (let cardsDrawn = 1; cardsDrawn <= 9; cardsDrawn += 1) {
+        let segmentIndex = 0;
+        let cardsDrawnThisSegment = cardsDrawn;
+        while (cardsDrawnThisSegment > segmentLengths[segmentIndex]) {
+          cardsDrawnThisSegment -= segmentLengths[segmentIndex];
           segmentIndex += 1;
-          cardsLeftInSegment = segmentLengths[segmentIndex];
+        }
+
+        forecast.push(guaranteedDraws
+          + (cardsDrawnThisSegment * segmentProbabilities[segmentIndex]));
+
+        if (cardsDrawnThisSegment === segmentLengths[segmentIndex]) {
+          guaranteedDraws += cardsDrawnThisSegment * segmentProbabilities[segmentIndex];
         }
       }
 
