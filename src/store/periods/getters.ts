@@ -27,7 +27,7 @@ const getters: Getters = {
   },
 
   model(state: PeriodsState, _: any, __: any, rootGetters: any): ISegment[] {
-    const deck: number[] = rootGetters.deckAsCardIds;
+    const deck: number[] = [...rootGetters.deckAsCardIds];
     if (deck.length === 0) return [];
     const model: number[][] = [deck];
     state.periods.forEach((period) => {
@@ -62,8 +62,8 @@ const getters: Getters = {
           position,
         };
       }).sort((a, b) => (a.name <= b.name ? -1 : 1)),
-      current: segmentId === 0,
-    }));
+      current: segmentId === model.length - 1,
+    })).reverse();
   },
 
 };

@@ -14,7 +14,6 @@ const mutations: MutationTree<InfectionDeckState> = {
 
   updateCityCardCount(state: InfectionDeckState, newCity: ICity) {
     const oldCity = state.deck.find(c => c.id === newCity.id);
-    console.log(oldCity);
     if (oldCity) oldCity.cardCount = newCity.cardCount;
   },
 
