@@ -17,12 +17,13 @@
     <v-data-table
       :headers="headers"
       :items="this.forecast"
-      sort-by="8c"
+      sort-by="p1"
       sort-desc
       disable-filtering
       disable-pagination
       hide-default-footer
       fixed-header
+      dense
     ></v-data-table>
   </v-container>
 </template>
@@ -30,6 +31,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
+// noinspection TypeScriptCheckImport
 import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
 
 export default Vue.extend({
@@ -46,11 +48,13 @@ export default Vue.extend({
       for (let k = 1; k <= 8; k += 1) {
         r.push({
           text: `${k} (cards)`,
-          value: `${k}c`,
+          value: `c${k}`,
+          align: 'right',
         });
         r.push({
           text: `${k} (%)`,
-          value: `${k}p`,
+          value: `p${k}`,
+          align: 'left',
         });
       }
       r.push({

@@ -145,7 +145,7 @@ const getters: Getters = {
     return cities.map((city) => {
       console.log(); // debug
       console.log(`City: [${city.id}] ${city.name}`); // debug
-      const forecast: { [k: string]: string } = {};
+      const forecast: { [k: string]: number } = {};
 
       for (let cardsDrawn = 1; cardsDrawn <= 8; cardsDrawn += 1) {
         console.log(`CardsDrawn: ${cardsDrawn};`); // debug
@@ -176,16 +176,16 @@ const getters: Getters = {
         } else { // debug
           console.log('no additional cards drawn.'); // debug
         } // debug
-        forecast[`${cardsDrawn}c`] = `${guaranteedDraws}`;
-        forecast[`${cardsDrawn}p`] = `${Math.round(chanceOfNextCard * 100)}%`;
+        forecast[`c${cardsDrawn}`] = guaranteedDraws;
+        forecast[`p${cardsDrawn}`] = Math.round(chanceOfNextCard * 100);
       }
 
       const bottomCard = chanceOfFindingCityInSegment(city, model[model.length - 1], 1);
       const cityForecast: ICityForecast = {
-        id: `${city.id}`,
+        id: city.id,
         name: city.name,
         ...forecast,
-        bottomCardChance: `${Math.round(bottomCard * 100)}%`,
+        bottomCardChance: Math.round(bottomCard * 100),
       };
       return cityForecast;
     });
