@@ -13,14 +13,21 @@
   >
     Use the Setup page to add cards to the deck.
   </empty-page-message>
-<!--  <v-data-table-->
-<!--    :headers="headers"-->
-<!--    :items="forecast"-->
-<!--    :-->
-<!--  ></v-data-table>-->
+  <v-container v-else>
+    <v-data-table
+      :headers="headers"
+      :items="this.forecast"
+      sort-by="8c"
+      sort-desc
+      disable-filtering
+      disable-pagination
+      hide-default-footer
+      fixed-header
+    ></v-data-table>
+  </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
 import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
@@ -30,6 +37,29 @@ export default Vue.extend({
     EmptyPageMessage,
   },
   computed: {
+    headers: () => {
+      const r: object[] = [{
+        text: 'City',
+        align: 'left',
+        value: 'name',
+      }];
+      for (let k = 1; k <= 8; k += 1) {
+        r.push({
+          text: `${k} (cards)`,
+          value: `${k}c`,
+        });
+        r.push({
+          text: `${k} (%)`,
+          value: `${k}p`,
+        });
+      }
+      r.push({
+        text: 'Bottom Card',
+        value: 'bottomCardChance',
+      });
+      console.log(r);
+      return r;
+    },
     ...mapGetters([
       'forecast',
     ]),

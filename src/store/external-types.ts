@@ -36,9 +36,9 @@ export interface ICityCardInSegment extends ICityCardInGroup {
 }
 
 export interface ICityForecast {
-  id: number;
+  id: string;
   name: string;
   // color: string;
-  [k: number]: number;
-  bottomCardChance: number;
+  [k: string]: string;
+  bottomCardChance: string;
 }
