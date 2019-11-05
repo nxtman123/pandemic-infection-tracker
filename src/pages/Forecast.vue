@@ -13,9 +13,11 @@
   >
     Use the Setup page to add cards to the deck.
   </empty-page-message>
-  <v-container v-else>
-    <h1>Forecast page</h1>
-  </v-container>
+<!--  <v-data-table-->
+<!--    :headers="headers"-->
+<!--    :items="forecast"-->
+<!--    :-->
+<!--  ></v-data-table>-->
 </template>
 
 <script>

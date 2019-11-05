@@ -39,6 +39,6 @@ export interface ICityForecast {
   id: number;
   name: string;
   // color: string;
-  forecast: number[];
+  [k: number]: number;
   bottomCardChance: number;
 }

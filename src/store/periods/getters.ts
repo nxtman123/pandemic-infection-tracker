@@ -21,22 +21,14 @@ const binomialCoefficient = (n: number, k: number) => {
   return coefficient;
 };
 
-const appearancesOfCityInSegment = (city: ICity, segment: ISegment) => {
-  let appearances = 0;
-  segment.cards.forEach((card: ICityCardInSegment) => {
-    if (card.cityId === city.id) appearances += 1;
-  });
-  return appearances;
-};
+const chanceOfAtLeastOneOfXInYWithZ = (x: number, y: number, z: number) => {
+  const hotCards = x;
+  const totalCards = y;
+  const drawnCards = z;
+  const coldCards = totalCards - hotCards;
 
-const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, drawnCards: number) => {
-  const cardsInSegment = segment.cards.length;
-  const hotCards = appearancesOfCityInSegment(city, segment);
-  const coldCards = cardsInSegment - hotCards;
-
+  console.log(`Odds of pulling at least 1 of ${hotCards} out of ${totalCards} with ${drawnCards} pulls`); // debug
   if (hotCards === 0 || drawnCards === 0) return 0;
-
-  console.log(`Odds of pulling at least 1 of ${hotCards} out of ${cardsInSegment} with ${drawnCards} pulls`);
 
   let form = '| ('; // debug
   let chance = 0;
@@ -49,11 +41,25 @@ const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, drawnCards
     form += `bc(${hotCards} ${hotCardsDrawn})*bc(${coldCards} ${coldCardsDrawn}) + `; // debug
     hotCardsDrawn -= 1;
   }
-  chance /= binomialCoefficient(cardsInSegment, drawnCards);
-  form += `) / bc(${cardsInSegment} ${drawnCards}) = ${chance}`; // debug
+  chance /= binomialCoefficient(totalCards, drawnCards);
+  form += `) / bc(${totalCards} ${drawnCards}) = ${chance}`; // debug
   console.log(form); // debug
   console.log('|'); // debug
   return chance;
+};
+
+const appearancesOfCityInSegment = (city: ICity, segment: ISegment) => {
+  let appearances = 0;
+  segment.cards.forEach((card: ICityCardInSegment) => {
+    if (card.cityId === city.id) appearances += 1;
+  });
+  return appearances;
+};
+
+const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, drawnCards: number) => {
+  const cardsInSegment = segment.cards.length;
+  const hotCards = appearancesOfCityInSegment(city, segment);
+  return chanceOfAtLeastOneOfXInYWithZ(hotCards, cardsInSegment, drawnCards);
 };
 
 const getters: Getters = {
@@ -128,11 +134,10 @@ const getters: Getters = {
     })).reverse();
   },
 
-  forecast(state: PeriodsState, get: any, __: any, rootGetters: any): ICityForecast[] | null {
-    // set up
+  forecast(_: any, periodsGetters: any, __: any, rootGetters: any): ICityForecast[] | null {
     const cities = [...rootGetters.citiesAlphabetically];
-    if (get.model === null) return null;
-    const model: ISegment[] = [...get.model];
+    if (periodsGetters.model === null) return null;
+    const model: ISegment[] = [...periodsGetters.model];
     if (model.length === 0) return [];
     if (model[0].current) model.splice(0, 1);
     const segmentLengths = model.map((segment: ISegment) => segment.cards.length);
@@ -140,40 +145,44 @@ const getters: Getters = {
     return cities.map((city) => {
       console.log(); // debug
       console.log(`City: [${city.id}] ${city.name}`); // debug
-      // forecast
-      const forecast: number[] = [];
-      let guaranteedDraws = 0;
+      const forecast: { [k: number]: number } = {};
 
       for (let cardsDrawn = 1; cardsDrawn <= 9; cardsDrawn += 1) {
         console.log(`CardsDrawn: ${cardsDrawn};`); // debug
         let segmentIndex = 0;
-        let cardsDrawnThisSegment = cardsDrawn;
-        while (cardsDrawnThisSegment > segmentLengths[segmentIndex]) {
-          cardsDrawnThisSegment -= segmentLengths[segmentIndex];
+        let cardsLeftToDraw = cardsDrawn;
+        let guaranteedDraws = 0;
+        let chanceOfNextCard = 0;
+        while (cardsLeftToDraw > segmentLengths[segmentIndex]) {
+          cardsLeftToDraw -= segmentLengths[segmentIndex];
+          guaranteedDraws += appearancesOfCityInSegment(city, model[segmentIndex]);
           segmentIndex += 1;
           console.log(`segment rollover. segment ${segmentIndex} of ${model.length}`); // debug
         }
-        let chance = 0;
-        if (segmentIndex < model.length) {
-          if (cardsDrawnThisSegment === segmentLengths[segmentIndex]) {
-            console.log('full segment.'); // debug
-            guaranteedDraws += appearancesOfCityInSegment(city, model[segmentIndex]);
-          } else {
-            console.log('calc odds.'); // debug
-            chance = chanceOfFindingCityInSegment(
-              city, model[segmentIndex], cardsDrawnThisSegment,
-            );
+        if (segmentIndex < model.length) { // didn't run off the end of the model
+          let cardsInSegment = segmentLengths[segmentIndex];
+          let appearances = appearancesOfCityInSegment(city, model[segmentIndex]);
+          const newGuaranteedDraws = (cardsLeftToDraw + appearances)
+            - cardsInSegment;
+          if (newGuaranteedDraws > 0) {
+            guaranteedDraws += newGuaranteedDraws;
+            appearances -= newGuaranteedDraws;
+            cardsInSegment -= newGuaranteedDraws;
+            cardsLeftToDraw -= newGuaranteedDraws;
           }
-        } else {
+          chanceOfNextCard = chanceOfAtLeastOneOfXInYWithZ(
+            appearances, cardsInSegment, cardsLeftToDraw,
+          );
+        } else { // debug
           console.log('no additional cards drawn.'); // debug
-        }
-        forecast.push(guaranteedDraws + chance);
+        } // debug
+        forecast[cardsDrawn] = guaranteedDraws + chanceOfNextCard;
       }
 
       const cityForecast: ICityForecast = {
         id: city.id,
         name: city.name,
-        forecast,
+        ...forecast,
         bottomCardChance: chanceOfFindingCityInSegment(city, model[model.length - 1], 1),
       };
       return cityForecast;
