@@ -21,6 +21,7 @@
       thumb-label="always"
       hide-details
       ticks="always"
+      label="Infection Rate"
       color="secondary"
       class="mt-8"
     ></v-slider>
