@@ -14,6 +14,16 @@
     Use the Setup page to add cards to the deck.
   </empty-page-message>
   <v-container v-else>
+    <v-slider
+      v-model="infectionRate"
+      min="2"
+      max="5"
+      thumb-label="always"
+      hide-details
+      ticks="always"
+      color="secondary"
+      class="mt-8"
+    ></v-slider>
     <v-data-table
       :headers="headers"
       :items="this.forecast"
@@ -38,14 +48,18 @@ export default Vue.extend({
   components: {
     EmptyPageMessage,
   },
+  data: () => ({
+    infectionRate: 1,
+  }),
   computed: {
-    headers: () => {
+    headers() {
       const r: object[] = [{
         text: 'City',
         align: 'left',
         value: 'name',
       }];
-      for (let k = 1; k <= 8; k += 1) {
+      const ir = this.infectionRate;
+      for (let k = ir; k <= 8 * ir; k += ir) {
         r.push({
           text: `${k} (cards)`,
           value: `c${k}`,
@@ -64,9 +78,9 @@ export default Vue.extend({
       console.log(r);
       return r;
     },
-    ...mapGetters([
-      'forecast',
-    ]),
+    forecast() {
+      return this.$store.getters.forecast(this.infectionRate);
+    },
   },
 });
 </script>

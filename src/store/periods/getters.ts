@@ -9,7 +9,7 @@ interface Getters extends GetterTree<PeriodsState, RootState> {
   periods: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>) => IPeriod[];
   model: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>)
     => ISegment[] | null;
-  forecast: (s: PeriodsState, g: any, __: any, rg: GetterTree<RootState, RootState>)
+  forecast: (s: PeriodsState, g: any, __: any, rg: GetterTree<RootState, RootState>) => (ir: number)
     => ICityForecast[] | null;
 }
 
@@ -134,7 +134,7 @@ const getters: Getters = {
     })).reverse();
   },
 
-  forecast(_: any, periodsGetters: any, __: any, rootGetters: any): ICityForecast[] | null {
+  forecast: (_: any, periodsGetters: any, __: any, rootGetters: any) => (iRate: number) => {
     const cities = [...rootGetters.citiesAlphabetically];
     if (periodsGetters.model === null) return null;
     const model: ISegment[] = [...periodsGetters.model];
@@ -147,7 +147,7 @@ const getters: Getters = {
       console.log(`City: [${city.id}] ${city.name}`); // debug
       const forecast: { [k: string]: number } = {};
 
-      for (let cardsDrawn = 1; cardsDrawn <= 8; cardsDrawn += 1) {
+      for (let cardsDrawn = iRate; cardsDrawn <= 8 * iRate; cardsDrawn += iRate) {
         console.log(`CardsDrawn: ${cardsDrawn};`); // debug
         let segmentIndex = 0;
         let cardsLeftToDraw = cardsDrawn;
@@ -177,7 +177,7 @@ const getters: Getters = {
           console.log('no additional cards drawn.'); // debug
         } // debug
         forecast[`c${cardsDrawn}`] = guaranteedDraws;
-        forecast[`p${cardsDrawn}`] = Math.round(chanceOfNextCard * 100);
+        forecast[`p${cardsDrawn}`] = Math.floor(chanceOfNextCard * 100);
       }
 
       const bottomCard = chanceOfFindingCityInSegment(city, model[model.length - 1], 1);
@@ -185,7 +185,7 @@ const getters: Getters = {
         id: city.id,
         name: city.name,
         ...forecast,
-        bottomCardChance: Math.round(bottomCard * 100),
+        bottomCardChance: Math.floor(bottomCard * 100),
       };
       return cityForecast;
     });
