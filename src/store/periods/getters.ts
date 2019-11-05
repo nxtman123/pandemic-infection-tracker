@@ -13,6 +13,14 @@ interface Getters extends GetterTree<PeriodsState, RootState> {
     => ICityForecast[] | null;
 }
 
+const binomialCoefficient = (n: number, k: number) => {
+  // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-20.php
+  let coefficient = 1;
+  for (let x = n - k + 1; x <= n; x += 1) coefficient *= x;
+  for (let x = 1; x <= k; x += 1) coefficient /= x;
+  return coefficient;
+};
+
 const appearancesOfCityInSegment = (city: ICity, segment: ISegment) => {
   let appearances = 0;
   segment.cards.forEach((card: ICityCardInSegment) => {
@@ -21,15 +29,31 @@ const appearancesOfCityInSegment = (city: ICity, segment: ISegment) => {
   return appearances;
 };
 
-const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, cardsDrawn: number) => {
+const chanceOfFindingCityInSegment = (city: ICity, segment: ISegment, drawnCards: number) => {
   const cardsInSegment = segment.cards.length;
-  const selectCityCards = appearancesOfCityInSegment(city, segment);
-  const nonSelectCityCards = cardsInSegment - selectCityCards;
+  const hotCards = appearancesOfCityInSegment(city, segment);
+  const coldCards = cardsInSegment - hotCards;
 
-  // TODO fix probability calc
-  // https://math.stackexchange.com/questions/2080203/40-cards-4-are-aces-probability-of-1-ace-when-drawing-2-cards-at-ramdo?rq=1
+  if (hotCards === 0 || drawnCards === 0) return 0;
 
-  return selectCityCards / cardsInSegment;
+  console.log(`Odds of pulling at least 1 of ${hotCards} out of ${cardsInSegment} with ${drawnCards} pulls`);
+
+  let form = '| ('; // debug
+  let chance = 0;
+  let hotCardsDrawn = Math.min(hotCards, drawnCards);
+  while (hotCardsDrawn > 0) {
+    const coldCardsDrawn = drawnCards - hotCardsDrawn;
+    console.log(`| hotCardsDrawn: ${hotCardsDrawn}; coldCardsDrawn: ${coldCardsDrawn};`); // debug
+    chance += (binomialCoefficient(hotCards, hotCardsDrawn)
+      * binomialCoefficient(coldCards, coldCardsDrawn));
+    form += `bc(${hotCards} ${hotCardsDrawn})*bc(${coldCards} ${coldCardsDrawn}) + `; // debug
+    hotCardsDrawn -= 1;
+  }
+  chance /= binomialCoefficient(cardsInSegment, drawnCards);
+  form += `) / bc(${cardsInSegment} ${drawnCards}) = ${chance}`; // debug
+  console.log(form); // debug
+  console.log('|'); // debug
+  return chance;
 };
 
 const getters: Getters = {
@@ -114,27 +138,36 @@ const getters: Getters = {
     const segmentLengths = model.map((segment: ISegment) => segment.cards.length);
 
     return cities.map((city) => {
+      console.log(); // debug
+      console.log(`City: [${city.id}] ${city.name}`); // debug
       // forecast
       const forecast: number[] = [];
       let guaranteedDraws = 0;
 
       for (let cardsDrawn = 1; cardsDrawn <= 9; cardsDrawn += 1) {
+        console.log(`CardsDrawn: ${cardsDrawn};`); // debug
         let segmentIndex = 0;
         let cardsDrawnThisSegment = cardsDrawn;
         while (cardsDrawnThisSegment > segmentLengths[segmentIndex]) {
           cardsDrawnThisSegment -= segmentLengths[segmentIndex];
           segmentIndex += 1;
+          console.log(`segment rollover. segment ${segmentIndex} of ${model.length}`); // debug
         }
-
-        if (cardsDrawnThisSegment === segmentLengths[segmentIndex]) {
-          guaranteedDraws += appearancesOfCityInSegment(city, model[segmentIndex]);
-          forecast.push(guaranteedDraws);
+        let chance = 0;
+        if (segmentIndex < model.length) {
+          if (cardsDrawnThisSegment === segmentLengths[segmentIndex]) {
+            console.log('full segment.'); // debug
+            guaranteedDraws += appearancesOfCityInSegment(city, model[segmentIndex]);
+          } else {
+            console.log('calc odds.'); // debug
+            chance = chanceOfFindingCityInSegment(
+              city, model[segmentIndex], cardsDrawnThisSegment,
+            );
+          }
         } else {
-          const chance = chanceOfFindingCityInSegment(
-            city, model[segmentIndex], cardsDrawnThisSegment,
-          );
-          forecast.push(guaranteedDraws + chance);
+          console.log('no additional cards drawn.'); // debug
         }
+        forecast.push(guaranteedDraws + chance);
       }
 
       const cityForecast: ICityForecast = {
