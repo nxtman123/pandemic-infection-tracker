@@ -40,7 +40,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
 // noinspection TypeScriptCheckImport
 import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
 
