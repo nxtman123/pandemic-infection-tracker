@@ -38,8 +38,8 @@
 <script>
 import Vue from 'vue';
 import { mapGetters, mapMutations } from 'vuex';
-import Period from '@/components/Period.vue';
-import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
+import Period from '../components/Period.vue';
+import EmptyPageMessage from '../components/EmptyPageMessage.vue';
 
 export default Vue.extend({
   components: {

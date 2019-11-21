@@ -31,7 +31,7 @@
 
 <script>
 import Vue from 'vue';
-import DrawerNavigation from '@/components/DrawerNavigation.vue';
+import DrawerNavigation from '../components/DrawerNavigation.vue';
 
 export default Vue.extend({
   components: { DrawerNavigation },

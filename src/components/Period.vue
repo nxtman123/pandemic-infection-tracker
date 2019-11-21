@@ -15,8 +15,8 @@
 
 <script>
 import Vue from 'vue';
-import CityCard from '@/components/CityCard.vue';
-import DrawCardButton from '@/components/DrawCardButton.vue';
+import CityCard from './CityCard.vue';
+import DrawCardButton from './DrawCardButton.vue';
 
 export default Vue.extend({
   components: {

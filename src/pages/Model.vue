@@ -36,7 +36,7 @@
 <script>
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
-import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
+import EmptyPageMessage from '../components/EmptyPageMessage.vue';
 
 export default Vue.extend({
   components: {

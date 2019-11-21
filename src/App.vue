@@ -9,7 +9,7 @@
 
 <script>
 import Vue from 'vue';
-import InGameLayout from '@/layouts/InGameLayout.vue';
+import InGameLayout from './layouts/InGameLayout.vue';
 
 export default Vue.extend({
   components: { InGameLayout },

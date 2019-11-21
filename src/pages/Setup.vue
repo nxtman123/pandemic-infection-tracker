@@ -12,7 +12,7 @@
 <script>
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
-import CityCardCountControl from '@/components/CityCardCountControl.vue';
+import CityCardCountControl from '../components/CityCardCountControl.vue';
 
 export default Vue.extend({
   components: {
