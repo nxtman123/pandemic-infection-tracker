@@ -16,9 +16,9 @@
   <v-container v-else>
     <v-sheet
       class="my-2 pa-1"
+      v-for="segment in model"
       :class="{ 'mb-8': segment.current }"
       :color="segment.current ? 'secondary' : 'primary'"
-      v-for="segment in model"
       :key="segment.id"
     >
       <v-sheet
