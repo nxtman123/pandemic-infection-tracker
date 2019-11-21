@@ -12,7 +12,7 @@ interface Getters extends GetterTree<PeriodsState, RootState> {
   periods: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>) => IPeriod[];
   model: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>)
     => ISegment[] | null;
-  forecast: (s: PeriodsState, g: any, __: any, rg: GetterTree<RootState, RootState>) => (ir: number)
+  forecast: (s: PeriodsState, g: any, rs: RootState, rg: GetterTree<RootState, RootState>)
     => ICityForecast[] | null;
 }
 
@@ -88,7 +88,8 @@ const getters: Getters = {
     })).reverse();
   },
 
-  forecast: (_: any, periodsGetters: any, __: any, rootGetters: any) => (iRate: number) => {
+  forecast: (_: any, periodsGetters: any, rootState: RootState, rootGetters: any) => {
+    const iRate = rootState.infectionRate;
     const cities = [...rootGetters.citiesAlphabetically];
     if (periodsGetters.model === null) return null;
     const model: ISegment[] = [...periodsGetters.model];

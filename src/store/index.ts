@@ -11,6 +11,15 @@ import periods from '@/store/periods';
 Vue.use(Vuex);
 
 export default new Vuex.Store<RootState>({
+  state: () => ({
+    infectionDeck: {
+      deck: [],
+    },
+    infectionRate: 2,
+    periods: {
+      periods: [],
+    },
+  }),
   getters,
   mutations,
   actions,

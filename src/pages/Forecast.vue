@@ -1,13 +1,13 @@
 <template>
   <empty-page-message
-    v-if="this.forecast === null"
+    v-if="forecast === null"
     icon-name="mdi-card-bulleted-off"
     message="Bad Card"
   >
     There was an unexpected card in the record.
   </empty-page-message>
   <empty-page-message
-    v-else-if="this.forecast.length === 0"
+    v-else-if="forecast.length === 0"
     icon-name="mdi-view-list"
     message="No forecast"
   >
@@ -27,7 +27,7 @@
     ></v-slider>
     <v-data-table
       :headers="headers"
-      :items="this.forecast"
+      :items="forecast"
       sort-by="p1"
       sort-desc
       disable-filtering
@@ -39,8 +39,9 @@
   </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 // noinspection TypeScriptCheckImport
 import EmptyPageMessage from '@/components/EmptyPageMessage.vue';
 
@@ -48,12 +49,9 @@ export default Vue.extend({
   components: {
     EmptyPageMessage,
   },
-  data: () => ({
-    infectionRate: 1,
-  }),
   computed: {
     headers() {
-      const r: object[] = [{
+      const r = [{
         text: 'City',
         align: 'left',
         value: 'name',
@@ -78,8 +76,16 @@ export default Vue.extend({
       console.log(r);
       return r;
     },
-    forecast() {
-      return this.$store.getters.forecast(this.infectionRate);
+    ...mapGetters([
+      'forecast',
+    ]),
+    infectionRate: {
+      get() {
+        return this.$store.state.infectionRate;
+      },
+      set(value) {
+        this.$store.commit('setInfectionRate', value);
+      },
     },
   },
 });
