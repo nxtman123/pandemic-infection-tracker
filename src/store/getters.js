@@ -1,28 +1,30 @@
-import { GetterTree } from 'vuex';
-import { ICityForecast, IPeriod, ISegment } from '@/store/external-types';
-import { RootState } from '@/store/types';
-import { PeriodsState } from './types';
 import {
   appearancesOfCityInSegment,
   chanceOfAtLeastOneOfXInYWithZ,
   chanceOfFindingCityInSegment,
-} from '@/store/periods/utils';
+} from './utils';
 
-interface Getters extends GetterTree<PeriodsState, RootState> {
-  periods: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>) => IPeriod[];
-  model: (s: PeriodsState, _: any, __: any, rg: GetterTree<RootState, RootState>)
-    => ISegment[] | null;
-  forecast: (s: PeriodsState, g: any, rs: RootState, rg: GetterTree<RootState, RootState>)
-    => ICityForecast[] | null;
-}
+export default {
 
-const getters: Getters = {
+  cityFromId: state => id => ({
+    id,
+    ...state.infectionDeck[id],
+  }),
 
-  periods(state: PeriodsState, _: any, __: any, rootGetters: any): IPeriod[] {
+  citiesAlphabetically(state) {
+    const deck = [...state.infectionDeck];
+    return deck.sort((a, b) => (a.name <= b.name ? -1 : 1));
+  },
+
+  deckAsCardIds(state) {
+    return state.infectionDeck.map(city => Array(city.cardCount).fill(city.id)).flat();
+  },
+
+  periods(state, getters) {
     return state.periods.map((cityIds, periodId) => ({
       id: periodId,
       cards: cityIds.map((cityId, position) => {
-        const city = rootGetters.cityFromId(cityId);
+        const city = getters.cityFromId(cityId);
         return {
           cityId,
           name: city.name,
@@ -34,20 +36,20 @@ const getters: Getters = {
     }));
   },
 
-  model(state: PeriodsState, _: any, __: any, rootGetters: any): ISegment[] | null {
+  model(state, getters) {
     // set up
-    const deck: number[] = [...rootGetters.deckAsCardIds];
+    const deck = [...getters.deckAsCardIds];
     if (deck.length === 0) {
       if (state.periods.length === 0
         || (state.periods.length === 1 && state.periods[0].length === 0)) return [];
       return null;
     }
-    const model: number[][] = [deck];
+    const model = [deck];
 
     // carry out the record
     try {
       state.periods.forEach((period) => {
-        const discard: number[] = [];
+        const discard = [];
         period.forEach((card) => {
           const lastSegment = model[model.length - 1];
           const index = lastSegment.indexOf(card);
@@ -76,7 +78,7 @@ const getters: Getters = {
     return model.map((segment, segmentId) => ({
       id: segmentId,
       cards: segment.map((cityId, position) => {
-        const city = rootGetters.cityFromId(cityId);
+        const city = getters.cityFromId(cityId);
         return {
           segmentId,
           cityId,
@@ -88,19 +90,19 @@ const getters: Getters = {
     })).reverse();
   },
 
-  forecast: (_: any, periodsGetters: any, rootState: RootState, rootGetters: any) => {
-    const iRate = rootState.infectionRate;
-    const cities = [...rootGetters.citiesAlphabetically];
-    if (periodsGetters.model === null) return null;
-    const model: ISegment[] = [...periodsGetters.model];
+  forecast: (state, getters) => {
+    const iRate = state.infectionRate;
+    const cities = [...getters.citiesAlphabetically];
+    if (getters.model === null) return null;
+    const model = [...getters.model];
     if (model.length === 0) return [];
     if (model[0].current) model.splice(0, 1);
-    const segmentLengths = model.map((segment: ISegment) => segment.cards.length);
+    const segmentLengths = model.map(segment => segment.cards.length);
 
     return cities.map((city) => {
       console.log(); // debug
       console.log(`City: [${city.id}] ${city.name}`); // debug
-      const forecast: { [k: string]: number } = {};
+      const forecast = {};
 
       for (let cardsDrawn = iRate; cardsDrawn <= 8 * iRate; cardsDrawn += iRate) {
         console.log(`CardsDrawn: ${cardsDrawn};`); // debug
@@ -136,16 +138,13 @@ const getters: Getters = {
       }
 
       const bottomCard = chanceOfFindingCityInSegment(city, model[model.length - 1], 1);
-      const cityForecast: ICityForecast = {
+      return {
         id: city.id,
         name: city.name,
         ...forecast,
         bottomCardChance: Math.floor(bottomCard * 100),
       };
-      return cityForecast;
     });
   },
 
 };
-
-export default getters;

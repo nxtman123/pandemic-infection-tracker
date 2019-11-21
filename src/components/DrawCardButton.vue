@@ -20,7 +20,7 @@
       <v-divider></v-divider>
       <v-list class="overflow-y-auto">
         <v-list-item
-          v-for="city in this.cities"
+          v-for="city in cities"
           :key="city.id"
           @click="drawCard(city)"
         >

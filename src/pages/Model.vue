@@ -1,13 +1,13 @@
 <template>
   <empty-page-message
-    v-if="this.model === null"
+    v-if="model === null"
     icon-name="mdi-card-bulleted-off"
     message="Bad Card"
   >
     There was an unexpected card in the record.
   </empty-page-message>
   <empty-page-message
-    v-else-if="this.model.length === 0"
+    v-else-if="model.length === 0"
     icon-name="mdi-image-filter-none"
     message="No model"
   >
@@ -18,7 +18,7 @@
       class="my-2 pa-1"
       :class="{ 'mb-8': segment.current }"
       :color="segment.current ? 'secondary' : 'primary'"
-      v-for="segment in this.model"
+      v-for="segment in model"
       :key="segment.id"
     >
       <v-sheet

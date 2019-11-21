@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import VueRouter from 'vue-router';
 import Setup from '@/pages/Setup.vue';
 import Record from '@/pages/Record.vue';
 import Model from '@/pages/Model.vue';
@@ -7,7 +7,7 @@ import Forecast from '@/pages/Forecast.vue';
 
 Vue.use(VueRouter);
 
-const routes: RouteConfig[] = [
+const routes = [
   {
     alias: '/',
     path: '/setup',

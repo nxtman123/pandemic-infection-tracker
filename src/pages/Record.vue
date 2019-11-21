@@ -1,6 +1,6 @@
 <template>
   <empty-page-message
-    v-if="this.periods.length === 0"
+    v-if="periods.length === 0"
     icon-name="mdi-playlist-edit"
     message="No game history"
   >
@@ -18,7 +18,7 @@
   </empty-page-message>
   <v-container class="pb-12" v-else>
     <period
-      v-for="period in this.periods"
+      v-for="period in periods"
       :key="period.id"
       :period="period"
     ></period>

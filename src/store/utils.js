@@ -1,6 +1,5 @@
-import { ICity, ICityCardInSegment, ISegment } from '@/store/external-types';
 
-const binomialCoefficient = (n: number, k: number) => {
+const binomialCoefficient = (n, k) => {
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-20.php
   let coefficient = 1;
   for (let x = n - k + 1; x <= n; x += 1) coefficient *= x;
@@ -8,7 +7,7 @@ const binomialCoefficient = (n: number, k: number) => {
   return coefficient;
 };
 
-export const chanceOfAtLeastOneOfXInYWithZ = (x: number, y: number, z: number) => {
+export const chanceOfAtLeastOneOfXInYWithZ = (x, y, z) => {
   const hotCards = x;
   const totalCards = y;
   const drawnCards = z;
@@ -35,16 +34,16 @@ export const chanceOfAtLeastOneOfXInYWithZ = (x: number, y: number, z: number) =
   return chance;
 };
 
-export const appearancesOfCityInSegment = (city: ICity, segment: ISegment) => {
+export const appearancesOfCityInSegment = (city, segment) => {
   let appearances = 0;
-  segment.cards.forEach((card: ICityCardInSegment) => {
+  segment.cards.forEach((card) => {
     if (card.cityId === city.id) appearances += 1;
   });
   return appearances;
 };
 
 export const chanceOfFindingCityInSegment = (
-  city: ICity, segment: ISegment, drawnCards: number,
+  city, segment, drawnCards,
 ) => {
   const cardsInSegment = segment.cards.length;
   const hotCards = appearancesOfCityInSegment(city, segment);

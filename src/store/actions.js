@@ -1,11 +1,22 @@
-import { ActionTree } from 'vuex';
-import { InfectionDeckState } from '@/store/infection-deck/types';
-import { RootState } from '@/store/types';
+import persistApi from '../api/persist';
 
-const actions: ActionTree<InfectionDeckState, RootState> = {
+const actions = {
+
+  async startup({ dispatch }) {
+    if (await persistApi.hasData()) {
+      const state = await persistApi.load();
+      if (state) this.replaceState(state);
+    } else {
+      dispatch('newDeck');
+    }
+  },
+
+  async persistState({ state }) {
+    await persistApi.persist(state);
+  },
 
   newDeck({ commit }) {
-    const cityNames: string[] = [
+    const cityNames = [
       'New York',
       'Washington',
       'Jacksonville',
