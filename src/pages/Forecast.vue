@@ -14,17 +14,6 @@
     Use the Setup page to add cards to the deck.
   </empty-page-message>
   <v-container v-else>
-    <v-slider
-      v-model="infectionRate"
-      min="2"
-      max="5"
-      thumb-label="always"
-      hide-details
-      ticks="always"
-      label="Infection Rate"
-      color="secondary"
-      class="mt-8"
-    ></v-slider>
     <v-data-table
       :headers="headers"
       :items="forecast"
@@ -41,8 +30,7 @@
 
 <script>
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
-// noinspection TypeScriptCheckImport
+import { mapGetters, mapState } from 'vuex';
 import EmptyPageMessage from '../components/EmptyPageMessage.vue';
 
 export default Vue.extend({
@@ -79,14 +67,9 @@ export default Vue.extend({
     ...mapGetters([
       'forecast',
     ]),
-    infectionRate: {
-      get() {
-        return this.$store.state.infectionRate;
-      },
-      set(value) {
-        this.$store.commit('setInfectionRate', value);
-      },
-    },
+    ...mapState([
+      'infectionRate',
+    ]),
   },
 });
 </script>

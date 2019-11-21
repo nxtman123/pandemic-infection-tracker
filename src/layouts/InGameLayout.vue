@@ -22,6 +22,8 @@
       clipped
     >
       <drawer-navigation/>
+      <v-divider/>
+      <infection-rate-control/>
     </v-navigation-drawer>
     <v-content>
       <slot></slot>
@@ -32,9 +34,13 @@
 <script>
 import Vue from 'vue';
 import DrawerNavigation from '../components/DrawerNavigation.vue';
+import InfectionRateControl from '../components/InfectionRateControl.vue';
 
 export default Vue.extend({
-  components: { DrawerNavigation },
+  components: {
+    DrawerNavigation,
+    InfectionRateControl,
+  },
   data() {
     return {
       drawer: null,
