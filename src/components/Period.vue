@@ -1,6 +1,6 @@
 <template>
-  <v-sheet class="my-1 pa-4">
-    <div class="d-flex justify-space-between mb-2">
+  <v-sheet class="mb-3 pa-3">
+    <div class="d-flex justify-space-between">
       <span class="headline period-title">{{ title }}</span>
       <v-btn icon @click="remove"><v-icon>mdi-close</v-icon></v-btn>
     </div>

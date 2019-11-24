@@ -1,7 +1,7 @@
 <template>
   <v-sheet
     elevation="1"
-    class="my-1 pa-2 d-flex justify-space-between align-baseline"
+    class="my-1 px-3 py-1 d-flex justify-space-between align-baseline"
     color="primary"
   >
     <span class="body-1 period-title">{{ card.name }}</span>

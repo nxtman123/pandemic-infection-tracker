@@ -6,15 +6,16 @@
   >
     <template v-slot:activator="{ on }">
       <v-btn
-        depressed
+        outlined
         color="secondary"
         width="100%"
-        class="d-block mt-2"
+        class="d-block mt-3"
         v-on="on"
       >
-        <v-icon>mdi-plus</v-icon>
+        <v-icon left>mdi-plus</v-icon> Draw Card
       </v-btn>
     </template>
+
     <v-card>
       <v-card-title>Draw Card</v-card-title>
       <v-divider></v-divider>

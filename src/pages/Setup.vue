@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pb-12">
     <h2 class="title">Cities</h2>
     <city-card-count-control
       v-for="city in cities"
