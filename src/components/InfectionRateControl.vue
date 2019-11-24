@@ -4,36 +4,44 @@
     <div class="d-flex align-baseline">
       <v-btn
         class="mr-2 body-2"
+        color="secondary"
         fab
         small
-        :color="infectionRate === 2 ? 'secondary' : 'primary'"
+        :outlined="infectionRate !== 2"
+        :depressed="infectionRate === 2"
         @click="() => { this.$store.commit('setInfectionRate', 2)}"
       >
         2
       </v-btn>
       <v-btn
         class="mr-2 body-2"
+        color="secondary"
         fab
         small
-        :color="infectionRate === 3 ? 'secondary' : 'primary'"
+        :outlined="infectionRate !== 3"
+        :depressed="infectionRate === 3"
         @click="() => { this.$store.commit('setInfectionRate', 3)}"
       >
         3
       </v-btn>
       <v-btn
         class="mr-2 body-2"
+        color="secondary"
         fab
         small
-        :color="infectionRate === 4 ? 'secondary' : 'primary'"
+        :outlined="infectionRate !== 4"
+        :depressed="infectionRate === 4"
         @click="() => { this.$store.commit('setInfectionRate', 4)}"
       >
         4
       </v-btn>
       <v-btn
         class="mr-2 body-2"
+        color="secondary"
         fab
         small
-        :color="infectionRate === 5 ? 'secondary' : 'primary'"
+        :outlined="infectionRate !== 5"
+        :depressed="infectionRate === 5"
         @click="() => { this.$store.commit('setInfectionRate', 5)}"
       >
         5
