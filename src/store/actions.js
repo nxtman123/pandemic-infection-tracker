@@ -20,7 +20,7 @@ const actions = {
       'New York',
       'Washington',
       'Jacksonville',
-      'Sãl Paulo',
+      'São Paulo',
       'London',
       'Istanbul',
       'Tripoli',
