@@ -33,7 +33,7 @@ const actions = {
       'Los Angeles',
       'Mexico City',
     ];
-    cityNames.forEach(name => commit('newCity', name));
+    cityNames.forEach(name => commit('newCityByName', name));
   },
 
 };

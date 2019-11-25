@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4';
 
 const mutations = {
 
@@ -17,11 +18,22 @@ const mutations = {
     state.periods[card.periodId].splice(card.position, 1);
   },
 
-  newCity(state, name) {
+  newCityByName(state, name) {
     state.infectionDeck.push({
-      id: state.infectionDeck.length,
+      id: uuidv4(),
       name,
-      cardCount: 0,
+      color: 'gameBlue',
+      cardCount: 1,
+    });
+  },
+
+  newCity(state, city) {
+    console.log(city);
+    state.infectionDeck.push({
+      id: uuidv4(),
+      name: city.name,
+      color: city.color,
+      cardCount: city.cardCount,
     });
   },
 

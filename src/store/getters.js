@@ -7,8 +7,7 @@ import {
 export default {
 
   cityFromId: state => id => ({
-    id,
-    ...state.infectionDeck[id],
+    ...state.infectionDeck.find(c => c.id === id),
   }),
 
   citiesAlphabetically(state) {

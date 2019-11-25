@@ -6,6 +6,7 @@
       :key="city.id"
       :city="city"
     ></city-card-count-control>
+    <new-city-button/>
   </v-container>
 </template>
 
@@ -13,10 +14,12 @@
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
 import CityCardCountControl from '../components/CityCardCountControl.vue';
+import NewCityButton from '../components/NewCityButton.vue';
 
 export default Vue.extend({
   components: {
     CityCardCountControl,
+    NewCityButton,
   },
   computed: {
     ...mapGetters({

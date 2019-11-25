@@ -12,6 +12,10 @@ export default new Vuetify({
       dark: {
         primary: '#0c103b',
         secondary: colors.green.darken2,
+        gameBlue: colors.blue.base,
+        gameYellow: colors.yellow.darken2,
+        gameBlack: colors.grey.darken4,
+        gameRed: colors.red.base,
       },
     },
   },

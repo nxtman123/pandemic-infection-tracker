@@ -1,8 +1,8 @@
 <template>
   <v-dialog
-    scrollable
-    max-width="15em"
     v-model="dialog"
+    scrollable
+    width="15em"
   >
     <template v-slot:activator="{ on }">
       <v-btn
