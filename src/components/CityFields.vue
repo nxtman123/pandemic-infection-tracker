@@ -2,11 +2,16 @@
   <div class="d-flex flex-column flex-md-row align-stretch align-md-center mr--2">
     <div class="flex-grow-1 mr-4">
       <v-text-field
+        :solo="!outlineNameField"
+        :outlined="outlineNameField"
+        flat
+        hide-details
+        class="my-2"
         color="secondary"
-        placeholder="Name"
+        label="Name"
         spellcheck
         :rules="nameRules"
-        :value="city.name"
+        v-model="internalName"
         @change="changeName"
       ></v-text-field>
     </div>
@@ -132,20 +137,41 @@ export default Vue.extend({
       default: false,
       type: Boolean,
     },
+    outlineNameField: {
+      default: false,
+      type: Boolean,
+    },
+    preventEmptyName: {
+      default: false,
+      type: Boolean,
+    },
   },
   data: () => ({
     deleteDialog: false,
+    internalName: '',
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 30) || 'Name must be less than 30 characters',
     ],
   }),
+  created() {
+    this.internalName = this.city.name;
+  },
+  watch: {
+    city() {
+      this.internalName = this.city.name;
+    },
+  },
   methods: {
     changeName(name) {
-      this.$emit(CHANGE_EVENT, {
-        ...this.city,
-        name,
-      });
+      if (name || !this.preventEmptyName) {
+        this.$emit(CHANGE_EVENT, {
+          ...this.city,
+          name,
+        });
+      } else {
+        this.internalName = this.city.name;
+      }
     },
     changeColor(color) {
       this.$emit(CHANGE_EVENT, {
@@ -168,7 +194,7 @@ export default Vue.extend({
       });
     },
     deleteCity() {
-      this.$store.commit('deleteCityById', this.city.id);
+      this.$emit('deleteCity');
     },
   },
 });

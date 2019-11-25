@@ -17,6 +17,7 @@
       >
         <v-card-text>
           <city-fields
+            outline-name-field
             ref="fields"
             v-model="city"
           />

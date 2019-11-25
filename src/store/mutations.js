@@ -28,7 +28,6 @@ const mutations = {
   },
 
   newCity(state, city) {
-    console.log(city);
     state.infectionDeck.push({
       id: uuidv4(),
       name: city.name,

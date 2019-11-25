@@ -2,9 +2,11 @@
   <div>
     <v-divider></v-divider>
     <city-fields
-      :show-delete-button="true"
+      show-delete-button
+      prevent-empty-name
       :city="city"
-      @change="update"
+      @change="updateCity"
+      @deleteCity="deleteCity"
     />
   </div>
 </template>
@@ -24,17 +26,14 @@ export default Vue.extend({
     },
   },
   methods: {
-    update(city) {
+    updateCity(city) {
       this.$store.commit('updateCity', {
         ...city,
       });
     },
+    deleteCity() {
+      this.$store.commit('deleteCityById', this.city.id);
+    },
   },
 });
 </script>
-
-<style scoped>
-span.period-title {
-  min-width: 9em;
-}
-</style>
