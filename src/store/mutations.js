@@ -10,11 +10,11 @@ const mutations = {
     state.periods[card.periodId].push(card.cityId);
   },
 
-  removePeriod(state, period) {
+  deletePeriod(state, period) {
     state.periods.splice(period.id, 1);
   },
 
-  removeCardFromPeriod(state, card) {
+  deleteCard(state, card) {
     state.periods[card.periodId].splice(card.position, 1);
   },
 

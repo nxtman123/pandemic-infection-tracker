@@ -27,6 +27,7 @@ export default {
         return {
           cityId,
           name: city.name,
+          color: city.color,
           periodId,
           position,
         };
@@ -82,6 +83,7 @@ export default {
           segmentId,
           cityId,
           name: city.name,
+          color: city.color,
           position,
         };
       }).sort((a, b) => (a.name <= b.name ? -1 : 1)),
@@ -140,6 +142,7 @@ export default {
       return {
         id: city.id,
         name: city.name,
+        color: city.color,
         ...forecast,
         bottomCardChance: Math.floor(bottomCard * 100),
       };

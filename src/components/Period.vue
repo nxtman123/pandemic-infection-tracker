@@ -2,12 +2,14 @@
   <v-sheet class="mb-3 pa-3">
     <div class="d-flex justify-space-between">
       <span class="headline period-title">{{ title }}</span>
-      <v-btn icon @click="remove"><v-icon>mdi-close</v-icon></v-btn>
+      <v-btn icon @click="deletePeriod"><v-icon>mdi-close</v-icon></v-btn>
     </div>
     <city-card
+      show-delete-button
       v-for="card in period.cards"
       :key="card.position"
       :card="card"
+      @deleteCard="deleteCard(card)"
     ></city-card>
     <draw-card-button :period-id="period.id"></draw-card-button>
   </v-sheet>
@@ -35,8 +37,11 @@ export default Vue.extend({
     },
   },
   methods: {
-    remove() {
-      this.$store.commit('removePeriod', this.period);
+    deleteCard(card) {
+      this.$store.commit('deleteCard', card);
+    },
+    deletePeriod() {
+      this.$store.commit('deletePeriod', this.period);
     },
   },
 });

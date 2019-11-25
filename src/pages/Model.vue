@@ -14,32 +14,42 @@
     Use the Setup page to add cards to the deck.
   </empty-page-message>
   <v-container v-else>
-    <v-sheet
-      class="my-2 pa-1"
-      v-for="segment in model"
-      :class="{ 'mb-8': segment.current }"
-      :color="segment.current ? 'secondary' : 'primary'"
+    <div
+      v-if="model.length !== 1"
+    >
+      <h2 class="title">Discard pile</h2>
+      <div class="px-2 py-1 v-sheet card-group mb-6">
+        <city-card
+          v-for="card in model[0].cards"
+          :key="card.position"
+          :card="card"
+        />
+      </div>
+    </div>
+    <h2 class="title">Draw pile</h2>
+    <div
+      class="px-2 py-1 v-sheet card-group mb-4"
+      v-for="segment in model.slice(model.length !== 1 ? 1 : 0)"
       :key="segment.id"
     >
-      <v-sheet
-        elevation="1"
-        class="d-block ma-1 pa-2"
+      <city-card
         v-for="card in segment.cards"
         :key="card.position"
-      >
-        <span class="body-1">{{ card.name }}</span>
-      </v-sheet>
-    </v-sheet>
+        :card="card"
+      />
+    </div>
   </v-container>
 </template>
 
 <script>
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
+import CityCard from '../components/CityCard.vue';
 import EmptyPageMessage from '../components/EmptyPageMessage.vue';
 
 export default Vue.extend({
   components: {
+    CityCard,
     EmptyPageMessage,
   },
   computed: {
@@ -49,3 +59,8 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped lang="stylus">
+.card-group
+  border: 1px solid white
+</style>
