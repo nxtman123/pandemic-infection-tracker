@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
 import Setup from '../pages/Setup.vue';
 import Record from '../pages/Record.vue';
 import Model from '../pages/Model.vue';
@@ -46,6 +47,21 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior: (to, from, savedPosition) => {
+    let scrollTo = { x: 0, y: 0 };
+    if (to.hash) {
+      scrollTo = to.hash;
+    } else if (to.name === 'record') {
+      scrollTo = { selector: '#bottom' };
+    } else if (savedPosition) {
+      scrollTo = savedPosition;
+    }
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(scrollTo);
+      }, 10);
+    });
+  },
   routes,
 });
 

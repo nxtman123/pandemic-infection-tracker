@@ -22,6 +22,7 @@
       :key="period.id"
       :period="period"
     ></period>
+    <div id="bottom" class="mt-12"></div>
     <v-btn
       fixed
       fab

@@ -6,6 +6,7 @@
       :key="city.id"
       :city="city"
     ></city-control>
+    <div class="mt-12"></div>
     <new-city-button/>
   </v-container>
 </template>
