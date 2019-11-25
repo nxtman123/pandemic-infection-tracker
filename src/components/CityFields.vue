@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-wrap align-center justify-space-between mr--2">
+  <div class="d-flex flex-column flex-md-row align-stretch align-md-center mr--2">
     <div class="flex-grow-1 mr-4">
       <v-text-field
         color="secondary"
@@ -11,8 +11,9 @@
       ></v-text-field>
     </div>
 
-    <div class="d-flex flex-wrap align-center">
-      <div class="mr-4">
+    <div class="d-flex flex-wrap flex-shrink-0 align-center">
+
+      <div class="mr-4 mb-3 mb-md-0">
         <v-avatar
           class="mr-2"
           :color="city.color"
@@ -52,59 +53,61 @@
         </v-btn>
       </div>
 
-      <v-sheet class="mr-4 py-1 px-3 secondary d-flex align-center">
-        <v-icon>mdi-cards</v-icon>
-        <v-btn
-          icon
-          @click="decrement"
-        >
-          <v-icon>mdi-minus</v-icon>
-        </v-btn>
-        <div
-          class="title d-inline-block text-center card-count"
-        >
-          {{ city.cardCount }}
+      <div class="d-flex flex-wrap align-center justify-space-between flex-grow-1">
+
+        <v-sheet class="mr-4 mb-3 mb-md-0 py-1 px-3 secondary d-flex align-center">
+          <v-icon>mdi-cards</v-icon>
+          <v-btn
+            icon
+            @click="decrement"
+          >
+            <v-icon>mdi-minus</v-icon>
+          </v-btn>
+          <div
+            class="title d-inline-block text-center card-count"
+          >
+            {{ city.cardCount }}
+          </div>
+          <v-btn
+            icon
+            @click="increment"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-sheet>
+
+        <div class="mr-4 mb-3 mb-md-0" v-if="showDeleteButton">
+          <v-dialog
+            v-model="deleteDialog"
+            width="25em"
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn
+                icon
+                @click="deleteDialog = true"
+              >
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title>Delete {{ city.name }}?</v-card-title>
+              <v-card-text>This cannot be undone</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  @click="deleteDialog = false"
+                >Cancel</v-btn>
+                <v-btn
+                  depressed
+                  color="error"
+                  @click="deleteCity"
+                >Delete</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
-        <v-btn
-          icon
-          @click="increment"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-sheet>
-
-      <v-spacer></v-spacer>
-      <div class="mr-4" v-if="showDeleteButton">
-        <v-dialog
-          v-model="deleteDialog"
-          width="25em"
-        >
-          <template v-slot:activator="{ on }">
-            <v-btn
-              icon
-              @click="deleteDialog = true"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </template>
-
-          <v-card>
-            <v-card-title>Delete {{ city.name }}?</v-card-title>
-            <v-card-text>This cannot be undone</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                text
-                @click="deleteDialog = false"
-              >Cancel</v-btn>
-              <v-btn
-                depressed
-                color="error"
-                @click="deleteCity"
-              >Delete</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </div>
     </div>
   </div>
@@ -134,7 +137,7 @@ export default Vue.extend({
     deleteDialog: false,
     nameRules: [
       v => !!v || 'Name is required',
-      v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+      v => (v && v.length <= 30) || 'Name must be less than 30 characters',
     ],
   }),
   methods: {

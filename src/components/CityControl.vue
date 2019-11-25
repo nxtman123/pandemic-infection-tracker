@@ -2,7 +2,6 @@
   <div>
     <v-divider></v-divider>
     <city-fields
-      class="mb-2 mt-3"
       :show-delete-button="true"
       :city="city"
       @change="update"
