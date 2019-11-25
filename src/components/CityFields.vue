@@ -1,9 +1,9 @@
 <template>
-  <div class="d-flex flex-wrap align-baseline justify-space-between">
-    <div class="flex-grow-1">
+  <div class="d-flex flex-wrap align-center justify-space-between mr--2">
+    <div class="flex-grow-1 mr-4">
       <v-text-field
-        label="Name"
-        class="mr-2"
+        color="secondary"
+        placeholder="Name"
         spellcheck
         :rules="nameRules"
         :value="city.name"
@@ -11,8 +11,8 @@
       ></v-text-field>
     </div>
 
-    <div class="d-flex flex-wrap align-baseline">
-      <div class="mr-2">
+    <div class="d-flex flex-wrap align-center">
+      <div class="mr-4">
         <v-avatar
           class="mr-2"
           :color="city.color"
@@ -52,23 +52,59 @@
         </v-btn>
       </div>
 
-      <div class="mr-2">
-        <span class="body-1">Infection cards</span>
+      <v-sheet class="mr-4 py-1 px-3 secondary d-flex align-center">
+        <v-icon>mdi-cards</v-icon>
         <v-btn
           icon
           @click="decrement"
         >
           <v-icon>mdi-minus</v-icon>
         </v-btn>
-        <span class="body-1 font-weight-bold d-inline-block text-center card-count">
+        <div
+          class="title d-inline-block text-center card-count"
+        >
           {{ city.cardCount }}
-        </span>
+        </div>
         <v-btn
           icon
           @click="increment"
         >
           <v-icon>mdi-plus</v-icon>
         </v-btn>
+      </v-sheet>
+
+      <v-spacer></v-spacer>
+      <div class="mr-4" v-if="showDeleteButton">
+        <v-dialog
+          v-model="deleteDialog"
+          width="25em"
+        >
+          <template v-slot:activator="{ on }">
+            <v-btn
+              icon
+              @click="deleteDialog = true"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title>Delete {{ city.name }}?</v-card-title>
+            <v-card-text>This cannot be undone</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                text
+                @click="deleteDialog = false"
+              >Cancel</v-btn>
+              <v-btn
+                depressed
+                color="error"
+                @click="deleteCity"
+              >Delete</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </div>
   </div>
@@ -89,8 +125,13 @@ export default Vue.extend({
       required: true,
       type: Object,
     },
+    showDeleteButton: {
+      default: false,
+      type: Boolean,
+    },
   },
   data: () => ({
+    deleteDialog: false,
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 20) || 'Name must be less than 20 characters',
@@ -123,11 +164,16 @@ export default Vue.extend({
         cardCount: Number.parseInt(this.city.cardCount, 10) + 1,
       });
     },
+    deleteCity() {
+      this.$store.commit('deleteCityById', this.city.id);
+    },
   },
 });
 </script>
 
 <style scoped lang="stylus">
+.mr--2
+  margin-right -16px
 .card-count
   width 1.75em
 </style>

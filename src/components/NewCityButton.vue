@@ -10,7 +10,6 @@
     </template>
 
     <v-card>
-      <v-card-title>New City</v-card-title>
       <v-form
         ref="form"
         v-model="valid"
@@ -19,14 +18,14 @@
         <v-card-text>
           <city-fields
             ref="fields"
-            :autofocus-name="dialog"
             v-model="city"
           />
         </v-card-text>
         <v-card-actions>
           <v-spacer/>
           <v-btn
-            text
+            depressed
+            color="secondary"
             type="submit"
           >
             Add city

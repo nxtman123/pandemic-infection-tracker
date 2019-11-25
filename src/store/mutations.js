@@ -37,9 +37,20 @@ const mutations = {
     });
   },
 
-  updateCityCardCount(state, newCity) {
+  updateCity(state, newCity) {
     const oldCity = state.infectionDeck.find(c => c.id === newCity.id);
-    if (oldCity) oldCity.cardCount = newCity.cardCount;
+    if (oldCity) {
+      oldCity.name = newCity.name;
+      oldCity.color = newCity.color;
+      oldCity.cardCount = newCity.cardCount;
+    }
+  },
+
+  deleteCityById(state, cityId) {
+    state.infectionDeck.splice(
+      state.infectionDeck.findIndex(c => c.id === cityId),
+      1,
+    );
   },
 
   setInfectionRate(state, value) {
