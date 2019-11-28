@@ -23,7 +23,9 @@
           class="mr-2"
           :color="city.color"
         >
-          <v-icon>mdi-palette</v-icon>
+          <v-icon
+            :color="city.color === 'gameYellow' ? 'gameBlack' : undefined"
+          >mdi-palette</v-icon>
         </v-avatar>
         <v-btn
           class="mr-2"

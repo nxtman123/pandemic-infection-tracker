@@ -1,13 +1,21 @@
 <template>
   <v-sheet
     elevation="1"
-    class="my-1 px-3 py-1 d-flex justify-space-between align-baseline"
+    class="my-1 d-flex justify-space-between align-top card"
     :color="card.color"
   >
-    <span class="body-1 period-title">{{ card.name }}</span>
+    <v-icon
+      class="background-decal"
+      :class="card.color === 'gameYellow' ? 'gameBlack--text' : undefined"
+    >mdi-biohazard</v-icon>
+    <span
+      class="title mx-3 mt-2 mb-5"
+      :class="card.color === 'gameYellow' ? 'gameBlack--text' : undefined"
+    >{{ card.name }}</span>
     <div v-if="showDeleteButton">
       <v-btn
         icon
+        :class="card.color === 'gameYellow' ? 'gameBlack--text' : undefined"
         @click="deleteCard"
       >
         <v-icon>mdi-close</v-icon>
@@ -38,8 +46,17 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
-span.period-title {
-  min-width: 8em;
-}
+<style scoped lang="stylus">
+.card
+  position relative
+  overflow hidden
+
+.background-decal
+  font-size 70pt
+  position absolute
+  top -0.15em
+  right 20%
+  opacity 0.4
+  transform rotate(17.5deg)
+
 </style>
