@@ -1,7 +1,7 @@
 <template>
   <v-sheet
-    elevation="1"
-    class="my-1 d-flex justify-space-between align-top card"
+    elevation="2"
+    class="my-2 d-flex justify-space-between align-top card"
     :color="card.color"
   >
     <v-icon
@@ -54,7 +54,7 @@ export default Vue.extend({
 .background-decal
   font-size 70pt
   position absolute
-  top -0.15em
+  bottom -0.225em
   right 20%
   opacity 0.4
   transform rotate(17.5deg)

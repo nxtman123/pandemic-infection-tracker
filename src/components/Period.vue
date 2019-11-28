@@ -1,7 +1,7 @@
 <template>
   <v-sheet class="mb-3 pa-3">
     <div class="d-flex justify-space-between">
-      <span class="headline period-title">{{ title }}</span>
+      <h2 class="headline">{{ title }}</h2>
       <v-btn icon @click="deletePeriod"><v-icon>mdi-close</v-icon></v-btn>
     </div>
     <city-card
@@ -46,9 +46,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-span.period-title {
-  min-width: 9em;
-}
-</style>

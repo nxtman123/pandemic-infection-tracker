@@ -14,21 +14,19 @@
     Use the Setup page to add cards to the deck.
   </empty-page-message>
   <v-container v-else>
-    <div
-      v-if="model.length !== 1"
-    >
-      <h2 class="title">Discard pile</h2>
-      <div class="px-2 py-1 v-sheet card-group mb-6">
+    <h2 class="headline mb-2">Discard pile</h2>
+    <v-sheet class="mb-3 pa-3">
+      <div v-if="model.length !== 1">
         <city-card
           v-for="card in model[0].cards"
           :key="card.position"
           :card="card"
         />
       </div>
-    </div>
-    <h2 class="title">Draw pile</h2>
-    <div
-      class="px-2 py-1 v-sheet card-group mb-4"
+    </v-sheet>
+    <h2 class="headline mt-6 mb-2">Draw pile</h2>
+    <v-sheet
+      class="mb-3 pa-3"
       v-for="segment in model.slice(model.length !== 1 ? 1 : 0)"
       :key="segment.id"
     >
@@ -37,7 +35,7 @@
         :key="card.position"
         :card="card"
       />
-    </div>
+    </v-sheet>
   </v-container>
 </template>
 
